@@ -1,4 +1,4 @@
-iam_name = "terraform-ec2-linux"
+iam_name = "terraform-ec2-windows"
 vpc_id  = "vpc-0419802ed12eec58a"
 ami_id  = "ami-00744e52917f35c39"
 availability_zone = "us-east-2a"
