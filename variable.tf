@@ -274,6 +274,13 @@ variable "ingress_rules" {
       cidr_block  = "192.168.161.215/32"
       description = "test"
     },
+    {
+      from_port   = ""
+      to_port     = 3389
+      protocol    = "tcp"
+      cidr_block  = "0.0.0.0/0"
+      description = "RDP" 
+    }
   ]
 }
 
@@ -302,6 +309,13 @@ variable "egress_rules" {
       cidr_block  = "192.168.161.215/32"
       description = "test"
     },
+    {
+      from_port   = 8084
+      to_port     = 8084
+      protocol    = "tcp"
+      cidr_block  = "192.168.161.215/32"
+      description = "test"
+    }
   ]
 }
 
