@@ -184,7 +184,7 @@ variable "ebs_volume_type" {
 variable "ebs_volume_size" {
   type        = number
   description = "Size of the additional EBS volumes in gigabytes"
-  default     = 10
+  default     = 30
 }
 
 variable "ebs_volume_encrypted" {
