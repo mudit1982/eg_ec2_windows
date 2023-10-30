@@ -91,7 +91,7 @@ resource "aws_security_group_rule" "ingress_rules" {
   protocol          = var.ingress_rules[count.index].protocol
   cidr_blocks       = [var.ingress_rules[count.index].cidr_block]
   description       = var.ingress_rules[count.index].description
-  security_group_id = aws_security_group.security_groups[].id
+  security_group_id = aws_security_group.security_groups[*].id
 }
 
 
@@ -103,7 +103,7 @@ resource "aws_security_group_rule" "egress_rules" {
   protocol          = var.ingress_rules[count.index].protocol
   cidr_blocks       = [var.ingress_rules[count.index].cidr_block]
   description       = var.ingress_rules[count.index].description
-  security_group_id = aws_security_group.security_groups[].id
+  security_group_id = aws_security_group.security_groups[*].id
 }
 
 
