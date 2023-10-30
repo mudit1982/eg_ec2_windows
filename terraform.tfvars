@@ -1,6 +1,6 @@
 iam_name = "terraform-ec2-linux"
 vpc_id  = "vpc-0419802ed12eec58a"
-ami_id  = "ami-0fa399d9c130ec923"
+ami_id  = "ami-00744e52917f35c39"
 availability_zone = "us-east-2a"
 instance_type = "t2.micro"
 key_name  ="key_pair_terraform"

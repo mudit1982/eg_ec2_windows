@@ -91,7 +91,7 @@ resource "aws_security_group_rule" "ingress_rules" {
   protocol          = var.ingress_rules[count.index].protocol
   cidr_blocks       = [var.ingress_rules[count.index].cidr_block]
   description       = var.ingress_rules[count.index].description
-  security_group_id = module.aws_security_group.security_groups[*].id
+  security_group_id = aws_security_group.security_groups[].id
 }
 
 
@@ -103,7 +103,7 @@ resource "aws_security_group_rule" "egress_rules" {
   protocol          = var.ingress_rules[count.index].protocol
   cidr_blocks       = [var.ingress_rules[count.index].cidr_block]
   description       = var.ingress_rules[count.index].description
-  security_group_id = module.aws_security_group.security_groups[*].id
+  security_group_id = aws_security_group.security_groups[].id
 }
 
 
@@ -132,7 +132,7 @@ resource "aws_instance" "default" {
   key_name                             = var.key_name
   subnet_id                            = var.subnet_id
   monitoring                           = var.monitoring
-  vpc_security_group_ids = concat(module.aws_security_group.security_groups[*].id,var.security_group_ids[*])
+  vpc_security_group_ids = concat(aws_security_group.security_groups[*].id,var.security_group_ids[*])
   root_block_device {
     volume_type           = var.root_volume_type
     volume_size           = var.root_volume_size
@@ -143,7 +143,7 @@ resource "aws_instance" "default" {
     #kms_key_id            = var.root_block_device_kms_key_id
   }
 
- depends_on = [module.aws_security_group.security_groups, aws_iam_role.iam]
+ depends_on = [aws_security_group.security_groups, aws_iam_role.iam]
 tags = merge(tomap(var.tags),{Name = "var.instance_name"})
 
 lifecycle {
