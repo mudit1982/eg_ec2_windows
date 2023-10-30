@@ -1,0 +1,11 @@
+iam_name = "terraform-ec2-linux"
+vpc_id  = "vpc-0419802ed12eec58a"
+ami_id  = "ami-0fa399d9c130ec923"
+availability_zone = "us-east-2a"
+instance_type = "t2.micro"
+key_name  ="key_pair_terraform"
+subnet_id  = "subnet-0b86a94123ccf1094"
+root_volume_type ="gp2"
+root_volume_size ="10"
+ebs_volume_count ="1"
+security_groups = ["s1","sg2"]
