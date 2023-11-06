@@ -33,7 +33,7 @@ resource "aws_iam_role" "iam" {
 }
 
 resource "aws_iam_instance_profile" "test_profile" {
-  name = "test_profile"
+  name = "test_profile_new"
   role = "${aws_iam_role.iam.name}"
 }
 # resource "aws_security_group" "security_groups" {
