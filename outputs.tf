@@ -6,18 +6,18 @@ output "public_ip" {
 */
 output "private_ip" {
   description = "Private IP of instance"
-  value       = one(aws_instance.project-iac-ec2-linux[*].private_ip)
+  value       = one(aws_instance.project-iac-ec2-windows[*].private_ip)
 }
 
 
 output "id" {
   description = " ID of the instance"
-  value       = one(aws_instance.project-iac-ec2-linux[*].id)
+  value       = one(aws_instance.project-iac-ec2-windows[*].id)
 }
 
 output "arn" {
   description = "ARN of the instance"
-  value       = one(aws_instance.project-iac-ec2-linux[*].arn)
+  value       = one(aws_instance.project-iac-ec2-windows[*].arn)
 }
 
 output "name" {
@@ -28,7 +28,7 @@ output "name" {
 
 output "security_group_ids" {
   description = "IDs on the AWS Security Groups associated with the instance"
-  value = aws_instance.project-iac-ec2-linux.vpc_security_group_ids
+  value = aws_instance.project-iac-ec2-windows.vpc_security_group_ids
   
 }
 

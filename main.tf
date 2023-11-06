@@ -101,7 +101,7 @@ resource "aws_security_group_rule" "egress_rules" {
 
 
 
-resource "aws_instance" "project-iac-ec2-linux" {
+resource "aws_instance" "project-iac-ec2-windows" {
   ami                                  = var.ami_id
   availability_zone                    = var.availability_zone
   instance_type                        = var.instance_type
@@ -158,7 +158,7 @@ resource "aws_volume_attachment" "project-iac-volume-attachment" {
   count       = local.volume_count
   device_name = var.ebs_device_name[count.index]
   volume_id   = module.ebs_volume.ebs_volume_id[count.index]
-  instance_id = aws_instance.project-iac-ec2-linux.id
+  instance_id = aws_instance.project-iac-ec2-windows.id
 }
 
 
@@ -175,7 +175,7 @@ resource "aws_cloudwatch_metric_alarm" "project-iac-cloudwatch-alarm" {
   actions_enabled     = "true"
  alarm_actions       = ["arn:aws:automate:us-east-2:ec2:reboot"]
     dimensions = {
-        InstanceId = aws_instance.project-iac-ec2-linux.id
+        InstanceId = aws_instance.project-iac-ec2-windows.id
       }
   }
 
