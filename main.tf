@@ -65,22 +65,15 @@ resource "aws_iam_instance_profile" "test_profile" {
 #     tags        = var.tags
 # }
 
-# module "aws_security_group" {
-#   source      = "./modules/security_group"
-#   count       = length(var.security_groups)
-#   name        = var.security_groups[count.index]
-#   description = lookup(var.awsprops, "secgroupname")
-#   vpc_id      = var.vpc_id
+module "aws_security_group" {
+  source      = "./modules/security_group"
+  sg_count = length(var.security_groups)
+  name = var.security_groups
+  description = lookup(var.awsprops, "secgroupname")
+  vpc_id      = var.vpc_id
 
-# } 
+} 
 
-resource "aws_security_group" "security_groups" {
-    
-      count       = length(var.security_groups)
-      name        = var.security_groups[count.index]
-    description = var.security_group_description
-    vpc_id      = var.vpc_id
-}
 
 resource "aws_security_group_rule" "ingress_rules" {
   count = length(var.ingress_rules)
@@ -91,7 +84,7 @@ resource "aws_security_group_rule" "ingress_rules" {
   protocol          = var.ingress_rules[count.index].protocol
   cidr_blocks       = [var.ingress_rules[count.index].cidr_block]
   description       = var.ingress_rules[count.index].description
-  security_group_id = aws_security_group.security_groups[count.index].id
+  security_group_id = module.aws_security_group.id[count.index]
 }
 
 
@@ -103,24 +96,12 @@ resource "aws_security_group_rule" "egress_rules" {
   protocol          = var.ingress_rules[count.index].protocol
   cidr_blocks       = [var.ingress_rules[count.index].cidr_block]
   description       = var.ingress_rules[count.index].description
-  security_group_id = aws_security_group.security_groups[count.index].id
+  security_group_id = module.aws_security_group.id[count.index]
 }
 
 
 
-# resource "aws_security_group_rule" "sg-rules" {
-#     for_each = {for s in var.security_group_rules : s.type => s}
-#     type                        = each.value.type
-#     # dcsdc
-#     from_port                   = each.value.from_port
-#     to_port                     = each.value.to_port
-#     protocol                    = each.value.protocol
-#     cidr_blocks                 = each.value.cidr_blocks
-#     description                 = each.value.description
-#     security_group_id           = aws_security_group.security_groups[0].id
-# }
-
-resource "aws_instance" "default" {
+resource "aws_instance" "project-iac-ec2-linux" {
   ami                                  = var.ami_id
   availability_zone                    = var.availability_zone
   instance_type                        = var.instance_type
@@ -132,7 +113,8 @@ resource "aws_instance" "default" {
   key_name                             = var.key_name
   subnet_id                            = var.subnet_id
   monitoring                           = var.monitoring
-  vpc_security_group_ids = concat(aws_security_group.security_groups[*].id,var.security_group_ids[*])
+  # vpc_security_group_ids = concat(module.aws_security_group.security_groups[*].id,var.security_group_ids[*])
+  vpc_security_group_ids = concat(module.aws_security_group.id[*],var.security_group_ids[*])
   root_block_device {
     volume_type           = var.root_volume_type
     volume_size           = var.root_volume_size
@@ -143,8 +125,9 @@ resource "aws_instance" "default" {
     #kms_key_id            = var.root_block_device_kms_key_id
   }
 
- depends_on = [aws_security_group.security_groups, aws_iam_role.iam]
-tags = merge(tomap(var.tags),{Name = "var.instance_name"})
+ depends_on = [module.aws_security_group.security_groups, aws_iam_role.iam]
+tags = merge(tomap(var.tags),{ApplicationFunctionality = var.ApplicationFunctionality, 
+      ApplicationDescription= var.ApplicationDescription })
 
 lifecycle {
      ignore_changes = [ami]
@@ -152,27 +135,35 @@ lifecycle {
 
 }
 
-resource "aws_ebs_volume" "default" {
-  count             = local.volume_count
-  availability_zone = var.availability_zone
-  size              = var.ebs_volume_size
-  iops              = local.ebs_iops
-  throughput        = local.ebs_throughput
-  type              = var.ebs_volume_type
-  tags              = var.tags
-  encrypted         = var.ebs_volume_encrypted
-  #kms_key_id        = var.kms_key_id
-}
+# resource "aws_ebs_volume" "default" {
+#   count             = local.volume_count
+#   availability_zone = var.availability_zone
+#   size              = var.ebs_volume_size
+#   iops              = local.ebs_iops
+#   throughput        = local.ebs_throughput
+#   type              = var.ebs_volume_type
+#   tags              = var.tags
+#   encrypted         = var.ebs_volume_encrypted
+#   #kms_key_id        = var.kms_key_id
+# } 
 
-resource "aws_volume_attachment" "default" {
+  module "ebs_volume" {
+    source = "./modules/ebs_volume"
+    ebs_volumes = local.volume_count
+
+    # ... omitted
+  }
+
+resource "aws_volume_attachment" "project-iac-volume-attachment" {
   count       = local.volume_count
   device_name = var.ebs_device_name[count.index]
-  volume_id   = aws_ebs_volume.default[count.index].id
-  instance_id = aws_instance.default.id
+  volume_id   = module.ebs_volume.ebs_volume_id[count.index]
+  instance_id = aws_instance.project-iac-ec2-linux.id
 }
 
-resource "aws_cloudwatch_metric_alarm" "foobar" {
-  alarm_name                = "terraform-test-foobar5"
+
+resource "aws_cloudwatch_metric_alarm" "project-iac-cloudwatch-alarm" {
+  alarm_name                = "terraform-test-cloudwatch-alarm"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = 15
   metric_name               = "CPUUtilization"
@@ -184,7 +175,7 @@ resource "aws_cloudwatch_metric_alarm" "foobar" {
   actions_enabled     = "true"
  alarm_actions       = ["arn:aws:automate:us-east-2:ec2:reboot"]
     dimensions = {
-        InstanceId = aws_instance.default.id
+        InstanceId = aws_instance.project-iac-ec2-linux.id
       }
   }
 

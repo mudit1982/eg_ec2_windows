@@ -54,7 +54,7 @@ variable "security_group_ids" {
 variable "security_groups" {
   description = "A list of new Security Group names to associate with EC2 instance."
   type        = list(string)
-  default     = ["sg1"]
+  default     = ["sg1","sg2"]
 }
 
 variable "security_group_description" {
@@ -153,7 +153,7 @@ variable "root_volume_type" {
 variable "root_volume_size" {
   type        = number
   description = "Size of the root volume in gigabytes"
-  default     = 30
+  default     = 10
 }
 
 variable "root_iops" {
@@ -168,12 +168,6 @@ variable "root_throughput" {
   default     = 0
 }
 
-variable "ebs_device_name" {
-  type        = list(string)
-  description = "Name of the EBS device to mount"
-  #default     = ["/dev/xvdb", "/dev/xvdc", "/dev/xvdd", "/dev/xvde", "/dev/xvdf", "/dev/xvdg", "/dev/xvdh", "/dev/xvdi", "/dev/xvdj", "/dev/xvdk", "/dev/xvdl", "/dev/xvdm", "/dev/xvdn", "/dev/xvdo", "/dev/xvdp", "/dev/xvdq", "/dev/xvdr", "/dev/xvds", "/dev/xvdt", "/dev/xvdu", "/dev/xvdv", "/dev/xvdw", "/dev/xvdx", "/dev/xvdy", "/dev/xvdz"]
-default = ["/dev/xvdb", "/dev/xvdc", "/dev/xvdd"]
-}
 
 variable "ebs_volume_type" {
   type        = string
@@ -184,7 +178,7 @@ variable "ebs_volume_type" {
 variable "ebs_volume_size" {
   type        = number
   description = "Size of the additional EBS volumes in gigabytes"
-  default     = 30
+  default     = 10
 }
 
 variable "ebs_volume_encrypted" {
@@ -274,13 +268,6 @@ variable "ingress_rules" {
       cidr_block  = "192.168.161.215/32"
       description = "test"
     },
-    {
-      from_port   = 3389
-      to_port     = 3389
-      protocol    = "tcp"
-      cidr_block  = "0.0.0.0/0"
-      description = "RDP" 
-    }
   ]
 }
 
@@ -309,14 +296,40 @@ variable "egress_rules" {
       cidr_block  = "192.168.161.215/32"
       description = "test"
     },
-    {
-      from_port   = 8084
-      to_port     = 8084
-      protocol    = "tcp"
-      cidr_block  = "192.168.161.215/32"
-      description = "test"
-    }
   ]
 }
 
-###############
+  variable "ebs_device_name" {
+  type        = list(string)
+  description = "Name of the EBS device to mount"
+  #default     = ["/dev/xvdb", "/dev/xvdc", "/dev/xvdd", "/dev/xvde", "/dev/xvdf", "/dev/xvdg", "/dev/xvdh", "/dev/xvdi", "/dev/xvdj", "/dev/xvdk", "/dev/xvdl", "/dev/xvdm", "/dev/xvdn", "/dev/xvdo", "/dev/xvdp", "/dev/xvdq", "/dev/xvdr", "/dev/xvds", "/dev/xvdt", "/dev/xvdu", "/dev/xvdv", "/dev/xvdw", "/dev/xvdx", "/dev/xvdy", "/dev/xvdz"]
+default = ["/dev/xvdb", "/dev/xvdc", "/dev/xvdd"]
+}
+
+
+variable "Environment" {
+  type    = string
+  default = "Dev"
+
+validation {
+   condition     = contains(["Dev", "Test" ,"Sandbox", "Staging", "Production"], var.Environment)
+   error_message = "Please provide a valid value for variable Envrionment. Allowed values are Dev, Test, Sandbox, Staging and Production"
+ }
+}
+
+
+variable "ApplicationFunctionality" {
+  type    = string
+  default = ""
+
+}
+
+variable "ApplicationDescription" {
+  type    = string
+  default = ""
+
+}
+
+
+
+

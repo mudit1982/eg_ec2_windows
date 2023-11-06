@@ -6,18 +6,18 @@ output "public_ip" {
 */
 output "private_ip" {
   description = "Private IP of instance"
-  value       = one(aws_instance.default[*].private_ip)
+  value       = one(aws_instance.project-iac-ec2-linux[*].private_ip)
 }
 
 
 output "id" {
   description = " ID of the instance"
-  value       = one(aws_instance.default[*].id)
+  value       = one(aws_instance.project-iac-ec2-linux[*].id)
 }
 
 output "arn" {
   description = "ARN of the instance"
-  value       = one(aws_instance.default[*].arn)
+  value       = one(aws_instance.project-iac-ec2-linux[*].arn)
 }
 
 output "name" {
@@ -28,7 +28,7 @@ output "name" {
 
 output "security_group_ids" {
   description = "IDs on the AWS Security Groups associated with the instance"
-  value = aws_instance.default.vpc_security_group_ids
+  value = aws_instance.project-iac-ec2-linux.vpc_security_group_ids
   
 }
 
@@ -48,10 +48,10 @@ output "alarm" {
 }
 
 */
-output "ebs_ids" {
-  description = "IDs of EBSs"
-  value       = aws_ebs_volume.default[*].id
-}
+# output "ebs_ids" {
+#   description = "IDs of EBSs"
+#   value       = aws_ebs_volume.default[*].id
+# }
 
 # output "security_group_id" {
 #   value       = aws_security_group.security_groups[*].id
@@ -67,3 +67,10 @@ output "ebs_ids" {
 #   value       = aws_security_group.security_groups[*].name
 #   description = "EC2 instance Security Group name"
 # }
+
+
+output "security_group_id" {
+  value = module.aws_security_group[*].id
+}    
+
+
