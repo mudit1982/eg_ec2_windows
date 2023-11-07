@@ -333,7 +333,7 @@ variable "secgroupdescription" {
 
 
 variable "ingress_rules" {
-  type = map(object)({
+  type = list(object)({
     from_port   = number
     to_port     = number
     protocol    = string
@@ -346,7 +346,7 @@ variable "ingress_rules" {
 
 
 variable "egress_rules" {
-  type = map(object)({
+  type = list(object)({
     from_port   = number
     to_port     = number
     protocol    = string
