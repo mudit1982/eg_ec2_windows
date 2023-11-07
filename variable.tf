@@ -334,14 +334,22 @@ variable "secgroupdescription" {
 
 variable "ingress_rules" {
   type = map(list(object))
-
+  default = {
+    "foo" = ["a", "b", "c"]
+    "bar" = ["d", "e"]
+    "baz" = []
+  }
 }
 
 
 
 variable "egress_rules" {
   type = map(list(object))
-
+  default = {
+    "foo" = ["a", "b", "c"]
+    "bar" = ["d", "e"]
+    "baz" = []
+  }
   }
 
 
