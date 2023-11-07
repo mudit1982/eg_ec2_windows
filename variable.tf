@@ -32,11 +32,14 @@ variable "ami_id" {
   default     = "ami id"
 }
 
-
-
 variable "vpc_id" {
   type        = string
   description = "The ID of the VPC that the instance security group belongs to"
+}
+
+variable "instance_profile_name" {
+  type        = string
+  description = "The Instance Profile Name"
 }
 
 variable "security_group_enabled" {
@@ -112,6 +115,12 @@ variable "instance_name" {
   type        = string
   default     = "test"
 }
+
+variable "instance_name" {
+  type        = string
+  default     = "test"
+}
+
 
 variable "availability_zone" {
   type        = string
