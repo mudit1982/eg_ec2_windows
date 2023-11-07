@@ -33,7 +33,7 @@ resource "aws_iam_role" "iam" {
 }
 
 resource "aws_iam_instance_profile" "test_profile" {
-  name = "test_profile_new"
+  name = "test_profile"
   role = "${aws_iam_role.iam.name}"
 }
 # resource "aws_security_group" "security_groups" {
@@ -69,7 +69,7 @@ module "aws_security_group" {
   source      = "./modules/security_group"
   sg_count = length(var.security_groups)
   name = var.security_groups
-  description = lookup(var.awsprops, "secgroupname")
+  description = var.secgroupdescription
   vpc_id      = var.vpc_id
 
 } 
@@ -84,7 +84,7 @@ resource "aws_security_group_rule" "ingress_rules" {
   protocol          = var.ingress_rules[count.index].protocol
   cidr_blocks       = [var.ingress_rules[count.index].cidr_block]
   description       = var.ingress_rules[count.index].description
-  security_group_id = module.aws_security_group.id
+  security_group_id = module.aws_security_group.id[count.index]
 }
 
 
@@ -126,8 +126,11 @@ resource "aws_instance" "project-iac-ec2-windows" {
   }
 
  depends_on = [module.aws_security_group.security_groups, aws_iam_role.iam]
-tags = merge(tomap(var.tags),{ApplicationFunctionality = var.ApplicationFunctionality, 
-      ApplicationDescription= var.ApplicationDescription })
+tags = merge(tomap(var.ec2_tags),{ApplicationFunctionality = var.ApplicationFunctionality, 
+      ApplicationDescription= var.ApplicationDescription, ApplicationOwner = var.ApplicationOwner, 
+      ApplicationTeam = var.ApplicationTeam, BackupSchedule =var.BackupSchedule, var.BusinessTower,
+      BusinessOwner = var.BusinessOwner,ServiceCriticality =var.ServiceCriticality,Subnet-id = var.subnet_id,
+      VPC-id = var.vpc_id})
 
 lifecycle {
      ignore_changes = [ami]

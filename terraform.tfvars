@@ -11,5 +11,66 @@ ebs_volume_count ="2"
 security_groups = ["sg3","sg4"]
 
 
-ApplicationFunctionality = ""
-ApplicationDescription = ""
+Environment="Dev"
+ApplicationFunctionality = "Test"
+ApplicationDescription = "To test"
+ApplicationOwner="abc@hotmail.com"
+ApplicationTeam="Team1"
+BackupSchedule="DR7y"
+BusinessTower="abc@gmail.com"
+BusinessOwner="abc@gmail.com"
+ServiceCriticality="High"
+
+
+
+
+
+
+
+ingress_rules = {
+    test-123-udp         = [80, 80, "tcp", "192.168.161.215/32", "NTP"]
+    gtg-456-tcp           = [8084, 8084, "tcp", "192.168.161.215/32", "Test"]
+}
+#  {
+#     {
+#       from_port   = 80
+#       to_port     = 80
+#       protocol    = "tcp"
+#       cidr_block  = "192.168.161.215/32"
+#       description = "test"
+#     },
+#     {
+#       from_port   = 8084
+#       to_port     = 8084
+#       protocol    = "tcp"
+#       cidr_block  = "192.168.161.215/32"
+#       description = "test"
+#     },
+#  }
+
+
+
+
+egress_rules = {
+    test-123-udp         = [124, 125, "udp", "test", "NTP"]
+    gtg-456-tcp           = [456, 456, "tcp", "test", "Test"]
+}
+
+# {
+#  [
+#     {
+#       from_port   = 80  
+#       to_port     = 80
+#       protocol    = "tcp"
+#       cidr_block  = "192.168.161.215/32"
+#       description = "test"
+#     },
+#     {
+#       from_port   = 8084
+#       to_port     = 8084
+#       protocol    = "tcp"
+#       cidr_block  = "192.168.161.215/32"
+#       description = "test"
+#     },
+#   ]
+# }

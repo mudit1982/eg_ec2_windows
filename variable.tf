@@ -211,101 +211,6 @@ variable "delete_on_termination" {
   default     = true
 }
 
-variable "tags" {
-    default = {
-      BackupSchedule             = "DR1y"
-      BusinessOwner              = "test@hotstar.com"
-      BusinessTower              = "test@hotstar.com"
-      InstanceIP                 = "10.33.21.25"
-      Name                       = "SSB-WPX-001-P"
-      OperatingSystem            = "Windows Server 2022"
-      OperatingSystemSupportTeam = "test@hotmail.com"
-      scheduler                  = "ec2-startstop"
-      ServerProcess              = "service MS "
-      ServerRoleType             = "Application"
-      ServiceCriticality         = "High"
-      Subnet-id                  = "subnet-04eff055558594bd7"
-      VPC-id                     = "vpc-0419802ed12eec58a"
-      TicketReference            = "CHG0050760"
-      DNSEntry                   = "csdasd"
-      DesignDocumentLink         = "acbv"
-    }
-    description = "Tags for WIndows Ec2 instances"
-    type        = map(string)
-  }
-
-
-variable "awsprops" {
-  type = map(any)
-  default = {
-    region       = "us-east-2"
-    keyname      = "myseckey"
-    secgroupname = "IAC-Sec-Group"
-  }
-}
-
-
-variable "ingress_rules" {
-  type = list(object({
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_block  = string
-    description = string
-  }))
-  default = [
-    {
-      from_port   = 80
-      to_port     = 80
-      protocol    = "tcp"
-      cidr_block  = "192.168.161.215/32"
-      description = "test"
-    },
-    {
-      from_port   = 8084
-      to_port     = 8084
-      protocol    = "tcp"
-      cidr_block  = "192.168.161.215/32"
-      description = "test"
-    },
-  ]
-}
-
-
-
-variable "egress_rules" {
-  type = list(object({
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_block  = string
-    description = string
-  }))
-  default = [
-    {
-      from_port   = 80
-      to_port     = 80
-      protocol    = "tcp"
-      cidr_block  = "192.168.161.215/32"
-      description = "test"
-    },
-    {
-      from_port   = 8084
-      to_port     = 8084
-      protocol    = "tcp"
-      cidr_block  = "192.168.161.215/32"
-      description = "test"
-    },
-  ]
-}
-
-  variable "ebs_device_name" {
-  type        = list(string)
-  description = "Name of the EBS device to mount"
-  #default     = ["/dev/xvdb", "/dev/xvdc", "/dev/xvdd", "/dev/xvde", "/dev/xvdf", "/dev/xvdg", "/dev/xvdh", "/dev/xvdi", "/dev/xvdj", "/dev/xvdk", "/dev/xvdl", "/dev/xvdm", "/dev/xvdn", "/dev/xvdo", "/dev/xvdp", "/dev/xvdq", "/dev/xvdr", "/dev/xvds", "/dev/xvdt", "/dev/xvdu", "/dev/xvdv", "/dev/xvdw", "/dev/xvdx", "/dev/xvdy", "/dev/xvdz"]
-default = ["/dev/xvdb", "/dev/xvdc", "/dev/xvdd"]
-}
-
 
 variable "Environment" {
   type    = string
@@ -330,6 +235,136 @@ variable "ApplicationDescription" {
 
 }
 
+variable "ApplicationOwner" {
+  description = "Owner of the Application"
+  type        = string
+  default     = ""
+
+  validation {
+   condition     = contains(["abc@hotmail.com", "abc@gmail.com"], var.ApplicationOwner)
+   error_message = "Please provide a valid Application Owner"
+ }
+}
+
+
+variable "ApplicationTeam" {
+  description = "Owner of the Application"
+  type        = string
+  default     = ""
+
+  validation {
+   condition     = contains(["Team1","Team2"], var.ApplicationTeam)
+   error_message = "Please provide a valid Application Team"
+ }
+}
+
+
+variable "BackupSchedule" {
+  description = "BackupScheduled of the Volume"
+  type        = string
+  default     = ""
+
+  validation {
+   condition     = contains(["DR7y","DR1y","DR1m"], var.BackupSchedule)
+   error_message = "Please provide a valid BackupSchedule. Valid values are DR7y,DR1y and DR1m"
+ }
+}
+
+
+variable "BusinessTower" {
+  description = "Business Tower"
+  type        = string
+  default     = ""
+
+  validation {
+   condition     = contains(["abc@gmail.com","xyz@gmail.com"], var.BusinessTower)
+   error_message = "Please provide a valid BusinessTower"
+ }
+}
+
+
+
+variable "BusinessOwner" {
+  description = "Business Tower"
+  type        = string
+  default     = ""
+
+  validation {
+   condition     = contains(["abc@gmail.com","xyz@gmail.com"], var.BusinessTower)
+   error_message = "Please provide a valid BusinessTower"
+ }
+}
+
+
+variable "ServiceCriticality" {
+  description = "Business Criticality of the Service"
+  type        = string
+  default     = ""
+
+  validation {
+   condition     = contains(["High","Low"," Medium"], var.ServiceCriticality)
+   error_message = "Please provide a valid Service Criticality, Valid values are High, Low and Medium"
+ }
+}
+
+variable "ec2_tags" {
+    default = {
+      InstanceIP                 = "10.33.21.25"
+      Name                       = "SSB-WPX-001-P"
+      OperatingSystem            = "Windows Server 2022"
+      OperatingSystemSupportTeam = "test@hotmail.com"
+      scheduler                  = "ec2-startstop"
+      ServerProcess              = "service MS "
+      ServerRoleType             = "Application"
+      TicketReference            = "CHG0050760"
+      DNSEntry                   = "csdasd"
+      DesignDocumentLink         = "acbv"
+    }
+    description = "Tags for WIndows Ec2 instances"
+    type        = map(string)
+  }
+
+
+variable "secgroupdescription" {
+  type = string
+  default = "Allow tcp to client host"
+  
+}
+
+
+variable "ingress_rules" {
+  type = map(list(object)({
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_block  = string
+    description = string
+  }))
+  default = [
+  ]
+}
+
+
+
+variable "egress_rules" {
+  type = list(object({
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_block  = string
+    description = string
+  }))
+  default = [
+
+  ]
+}
+
+  variable "ebs_device_name" {
+  type        = list(string)
+  description = "Name of the EBS device to mount"
+  #default     = ["/dev/xvdb", "/dev/xvdc", "/dev/xvdd", "/dev/xvde", "/dev/xvdf", "/dev/xvdg", "/dev/xvdh", "/dev/xvdi", "/dev/xvdj", "/dev/xvdk", "/dev/xvdl", "/dev/xvdm", "/dev/xvdn", "/dev/xvdo", "/dev/xvdp", "/dev/xvdq", "/dev/xvdr", "/dev/xvds", "/dev/xvdt", "/dev/xvdu", "/dev/xvdv", "/dev/xvdw", "/dev/xvdx", "/dev/xvdy", "/dev/xvdz"]
+default = ["/dev/xvdb", "/dev/xvdc", "/dev/xvdd"]
+}
 
 
 
