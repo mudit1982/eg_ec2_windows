@@ -27,10 +27,28 @@ ServiceCriticality="High"
 
 
 
-ingress_rules = {
-    test-123-udp         = [80, 80, "tcp", "192.168.161.215/32", "NTP"]
-    gtg-456-tcp           = [8084, 8084, "tcp", "192.168.161.215/32", "Test"]
-}
+# ingress_rules = {
+#     test-123-udp         = [80, 80, "tcp", "192.168.161.215/32", "NTP"]
+#     gtg-456-tcp           = [8084, 8084, "tcp", "192.168.161.215/32", "Test"]
+# }
+
+ingress_rules =
+[
+    {
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      cidr_block  = "192.168.161.215/32"
+      description = "test"
+    },
+    {
+      from_port   = 8084
+      to_port     = 8084
+      protocol    = "tcp"
+      cidr_block  = "192.168.161.215/32"
+      description = "test"
+    },
+  ]
 #  {
 #     {
 #       from_port   = 80
@@ -48,13 +66,28 @@ ingress_rules = {
 #     },
 #  }
 
+    egress_rules = [
+      {
+        from_port   = 80
+        to_port     = 80
+        protocol    = "tcp"
+        cidr_block  = "192.168.161.215/32"
+        description = "test"
+      },
+      {
+        from_port   = 8084
+        to_port     = 8084
+        protocol    = "tcp"
+        cidr_block  = "192.168.161.215/32"
+        description = "test"
+      },
+    ]
 
 
-
-egress_rules = {
-    test-123-udp         = [124, 125, "udp", "test", "NTP"]
-    gtg-456-tcp          = [456, 456, "tcp", "test", "Test"]
-}
+# egress_rules = {
+#     test-123-udp         = [124, 125, "udp", "test", "NTP"]
+#     gtg-456-tcp          = [456, 456, "tcp", "test", "Test"]
+# }
 
 # {
 #  [
