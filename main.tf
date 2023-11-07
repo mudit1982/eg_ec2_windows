@@ -138,6 +138,17 @@ lifecycle {
 
 }
 
+resource "aws_network_interface" "project-iac-ec2-windows-ni" {
+  subnet_id       = var.subnet_id
+  private_ips     = ["10.0.0.50"]
+
+
+  attachment {
+    instance     = aws_instance.project-iac-ec2-windows.id
+    device_index = 1
+  }
+  depends_on = [aws_instance.project-iac-ec2-windows.id]
+}
 # resource "aws_ebs_volume" "default" {
 #   count             = local.volume_count
 #   availability_zone = var.availability_zone

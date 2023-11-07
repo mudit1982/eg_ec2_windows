@@ -11,7 +11,7 @@ ebs_volume_count ="2"
 security_groups = ["sg3","sg4"]
 instance_profile_name="test_profile_new"
 
-
+##Tags to be passed as variables. These would be appended to the pre defined tags in variables.tf
 Environment="Dev"
 ApplicationFunctionality = "Test"
 ApplicationDescription = "To test"
@@ -25,14 +25,7 @@ ServiceCriticality="High"
 
 
 
-
-
-
-# ingress_rules = {
-#     test-123-udp         = [80, 80, "tcp", "192.168.161.215/32", "NTP"]
-#     gtg-456-tcp           = [8084, 8084, "tcp", "192.168.161.215/32", "Test"]
-# }
-
+######Ingress and Egress rules for the New Security Groups.The number of rules should match or be 
 ingress_rules =[
  
 {
