@@ -128,7 +128,7 @@ resource "aws_instance" "project-iac-ec2-windows" {
  depends_on = [module.aws_security_group.security_groups, aws_iam_role.iam]
 tags = merge(tomap(var.ec2_tags),{ApplicationFunctionality = var.ApplicationFunctionality, 
       ApplicationDescription= var.ApplicationDescription, ApplicationOwner = var.ApplicationOwner, 
-      ApplicationTeam = var.ApplicationTeam, BackupSchedule =var.BackupSchedule, var.BusinessTower,
+      ApplicationTeam = var.ApplicationTeam, BackupSchedule =var.BackupSchedule,
       BusinessOwner = var.BusinessOwner,ServiceCriticality =var.ServiceCriticality,Subnet-id = var.subnet_id,
       VPC-id = var.vpc_id})
 
