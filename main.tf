@@ -140,7 +140,7 @@ lifecycle {
 
 resource "aws_network_interface" "project-iac-ec2-windows-ni" {
   subnet_id       = var.subnet_id
-  private_ips     = ["10.0.0.50"]
+  private_ips     = ["172.31.0.20"]
 
 
   attachment {
