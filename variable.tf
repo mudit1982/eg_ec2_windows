@@ -111,10 +111,6 @@ variable "region" {
   description = "AWS Region the instance is launched in"
   default     = ""
 }
-variable "instance_name" {
-  type        = string
-  default     = "test"
-}
 
 variable "instance_name" {
   type        = string
