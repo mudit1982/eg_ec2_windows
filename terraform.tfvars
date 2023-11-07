@@ -33,22 +33,21 @@ ServiceCriticality="High"
 # }
 
 ingress_rules =[
- { 
-  sg1={
+ 
+{
       from_port   = "80"
       to_port     = "80"
       protocol    = "tcp"
       cidr_block  = "192.168.161.215/32"
       description = "test"
     },
-    sg2={
+    {
       from_port   = "8084"
       to_port     = "8084"
       protocol    = "tcp"
       cidr_block  = "192.168.161.215/32"
       description = "test"
     }
- }
 ]
 
   
@@ -69,22 +68,22 @@ ingress_rules =[
 #     },
 #  }
     egress_rules = [
-      {
-        sg1={
+
+        {
         from_port   = 80
         to_port     = 80
         protocol    = "tcp"
         cidr_block  = "192.168.161.215/32"
         description = "test"
       },
-      sg2={
+      {
         from_port   = 8084
         to_port     = 8084
         protocol    = "tcp"
         cidr_block  = "192.168.161.215/32"
         description = "test"
       }
-      }
+
     ]
     
     
