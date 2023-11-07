@@ -29,7 +29,7 @@ resource "aws_iam_role" "iam" {
   path                 = "/"
   assume_role_policy   = data.aws_iam_policy_document.default.json
   #permissions_boundary = var.permissions_boundary_arn
-  tags                 = var.tags
+  tags                 = var.ec2_tags
 }
 
 resource "aws_iam_instance_profile" "test_profile" {
