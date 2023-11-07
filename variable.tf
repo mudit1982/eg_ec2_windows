@@ -285,13 +285,13 @@ variable "BusinessTower" {
 
 
 variable "BusinessOwner" {
-  description = "Business Tower"
+  description = "Business Owner"
   type        = string
   default     = ""
 
   validation {
-   condition     = contains(["abc@gmail.com","xyz@gmail.com"], var.BusinessTower)
-   error_message = "Please provide a valid BusinessTower"
+   condition     = contains(["abc@gmail.com","xyz@gmail.com"], var.BusinessOwner)
+   error_message = "Please provide a valid BusinessOwner"
  }
 }
 
@@ -340,8 +340,7 @@ variable "ingress_rules" {
     cidr_block  = string
     description = string
   }))
-  default = [
-  ]
+
 }
 
 
@@ -354,9 +353,7 @@ variable "egress_rules" {
     cidr_block  = string
     description = string
   }))
-  default = [
 
-  ]
 }
 
   variable "ebs_device_name" {
