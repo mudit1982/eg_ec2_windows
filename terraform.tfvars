@@ -9,6 +9,7 @@ root_volume_type ="gp2"
 root_volume_size ="40"
 ebs_volume_count ="2"
 security_groups = ["sg3","sg4"]
+instance_profile_name="test_profile_new"
 
 
 Environment="Dev"
