@@ -33,7 +33,6 @@ ServiceCriticality="High"
 # }
 
 ingress_rules =
-[
     {
       from_port   = 80
       to_port     = 80
@@ -48,7 +47,7 @@ ingress_rules =
       cidr_block  = "192.168.161.215/32"
       description = "test"
     },
-  ]
+  
 #  {
 #     {
 #       from_port   = 80
@@ -66,7 +65,7 @@ ingress_rules =
 #     },
 #  }
 
-    egress_rules = [
+    egress_rules = 
       {
         from_port   = 80
         to_port     = 80
@@ -81,7 +80,7 @@ ingress_rules =
         cidr_block  = "192.168.161.215/32"
         description = "test"
       },
-    ]
+    
 
 
 # egress_rules = {
