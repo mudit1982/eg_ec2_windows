@@ -147,7 +147,7 @@ resource "aws_network_interface" "project-iac-ec2-windows-ni" {
     instance     = aws_instance.project-iac-ec2-windows.id
     device_index = 1
   }
-  depends_on = [aws_instance.project-iac-ec2-windows.id]
+  depends_on = [aws_instance.project-iac-ec2-windows]
 }
 # resource "aws_ebs_volume" "default" {
 #   count             = local.volume_count
