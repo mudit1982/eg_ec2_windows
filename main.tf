@@ -96,7 +96,7 @@ resource "aws_security_group_rule" "egress_rules" {
   protocol          = var.ingress_rules[count.index].protocol
   cidr_blocks       = [var.ingress_rules[count.index].cidr_block]
   description       = var.ingress_rules[count.index].description
-  security_group_id = module.aws_security_group.id
+  security_group_id = module.aws_security_group.id[count.index]
 }
 
 

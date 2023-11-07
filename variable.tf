@@ -333,25 +333,32 @@ variable "secgroupdescription" {
 
 
 variable "ingress_rules" {
-  type = map(list(object))
-  default = {
-    "foo" = ["a", "b", "c"]
-    "bar" = ["d", "e"]
-    "baz" = []
-  }
+  type = list(object({
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_block  = string
+    description = string
+  }))
+  default = [
+
+  ]
 }
 
 
 
 variable "egress_rules" {
-  type = map(list(object))
-  default = {
-    "foo" = ["a", "b", "c"]
-    "bar" = ["d", "e"]
-    "baz" = []
-  }
-  }
+  type = list(object({
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_block  = string
+    description = string
+  }))
+  default = [
 
+  ]
+}
 
   variable "ebs_device_name" {
   type        = list(string)

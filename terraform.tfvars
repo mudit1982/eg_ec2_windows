@@ -53,7 +53,7 @@ ingress_rules = {
 
 egress_rules = {
     test-123-udp         = [124, 125, "udp", "test", "NTP"]
-    gtg-456-tcp           = [456, 456, "tcp", "test", "Test"]
+    gtg-456-tcp          = [456, 456, "tcp", "test", "Test"]
 }
 
 # {
