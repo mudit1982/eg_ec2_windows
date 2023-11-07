@@ -6,7 +6,7 @@ instance_type = "t2.micro"
 key_name  = "Windows_kp"
 subnet_id  = "subnet-0b86a94123ccf1094"
 root_volume_type ="gp2"
-root_volume_size ="10"
+root_volume_size ="40"
 ebs_volume_count ="2"
 security_groups = ["sg3","sg4"]
 
