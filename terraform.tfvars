@@ -32,8 +32,8 @@ ServiceCriticality="High"
 #     gtg-456-tcp           = [8084, 8084, "tcp", "192.168.161.215/32", "Test"]
 # }
 
-ingress_rules =
-    {
+ingress_rules =[
+ { {
       from_port   = 80
       to_port     = 80
       protocol    = "tcp"
@@ -47,6 +47,8 @@ ingress_rules =
       cidr_block  = "192.168.161.215/32"
       description = "test"
     }
+ }
+]
 
   
 #  {
@@ -65,8 +67,8 @@ ingress_rules =
 #       description = "test"
 #     },
 #  }
-    egress_rules = 
-      {
+    egress_rules = [
+      {{
         from_port   = 80
         to_port     = 80
         protocol    = "tcp"
@@ -80,6 +82,8 @@ ingress_rules =
         cidr_block  = "192.168.161.215/32"
         description = "test"
       }
+      }
+    ]
     
     
 
