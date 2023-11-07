@@ -34,15 +34,15 @@ ServiceCriticality="High"
 
 ingress_rules =[
  { {
-      from_port   = 80
-      to_port     = 80
+      from_port   = "80"
+      to_port     = "80"
       protocol    = "tcp"
       cidr_block  = "192.168.161.215/32"
       description = "test"
     },
     {
-      from_port   = 8084
-      to_port     = 8084
+      from_port   = "8084"
+      to_port     = "8084"
       protocol    = "tcp"
       cidr_block  = "192.168.161.215/32"
       description = "test"
