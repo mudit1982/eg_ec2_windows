@@ -8,7 +8,7 @@ subnet_id  = "subnet-04eff055558594bd7"
 root_volume_type ="gp2"
 root_volume_size ="40"
 ebs_volume_count ="2"
-security_groups = ["sg3"]
+security_groups = ["sg3","sg4"]
 instance_profile_name="test_profile_new"
 
 ##Tags to be passed as variables. These would be appended to the pre defined tags in variables.tf
