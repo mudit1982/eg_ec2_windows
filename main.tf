@@ -119,7 +119,9 @@ lifecycle {
 resource "aws_network_interface" "project-iac-ec2-windows-ni" {
   subnet_id       = var.subnet_id
   private_ips     = ["172.31.0.20"]
-
+  lifecycle {
+    create_before_destroy = true # or false
+  }
 
   attachment {
     instance     = aws_instance.project-iac-ec2-windows.id
