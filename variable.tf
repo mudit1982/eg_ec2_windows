@@ -51,7 +51,7 @@ variable "security_group_enabled" {
 variable "security_group_ids" {
   description = "A list of existing Security Group IDs to associate with EC2 instance."
   type        = list(string)
-  default     = ["sg-0c5426001fd0fb679","sg-033170e1d5fe97eaa"]
+  default     = ["sg-0bd541cafc1955479"]
 }
 
 variable "security_groups" {
