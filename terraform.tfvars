@@ -2,7 +2,7 @@ iam_name = "terraform-ec2-windows"
 vpc_id  = "vpc-0777935da25d06fe3"
 ami_id  = "ami-00744e52917f35c39"
 availability_zone = "us-east-2a"
-instance_type = "t2.nano"
+instance_type = "t2.micro"
 key_name  = "Windows_kp"
 subnet_id  = "subnet-03585b0505602f1a7"
 root_volume_type ="gp2"
@@ -12,7 +12,7 @@ security_groups = ["sg3","sg4"]
 instance_profile_name="test_profile_new"
 
 ec2_tags = {
-      InstanceIP                 = "10.33.21.25"
+      InstanceIP                 = "10.x.x.x"
       Name                       = "SSB-WPX-001-P"
       OperatingSystem            = "Windows Server 2022"
       OperatingSystemSupportTeam = "test@hotmail.com"
