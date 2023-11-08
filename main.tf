@@ -145,7 +145,7 @@ resource "aws_volume_attachment" "project-iac-volume-attachment" {
 
 
 resource "aws_cloudwatch_metric_alarm" "project-iac-cloudwatch-alarm" {
-  alarm_name                = "terraform-test-cloudwatch-alarm"
+  alarm_name                = "terraform-test-cloudwatch-alarm-windows"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = 15
   metric_name               = "CPUUtilization"
