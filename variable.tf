@@ -314,16 +314,6 @@ variable "ServiceCriticality" {
 
 variable "ec2_tags" {
     default = {
-      InstanceIP                 = "10.33.21.25"
-      Name                       = "SSB-WPX-001-P"
-      OperatingSystem            = "Windows Server 2022"
-      OperatingSystemSupportTeam = "test@hotmail.com"
-      scheduler                  = "ec2-startstop"
-      ServerProcess              = "service MS "
-      ServerRoleType             = "Application"
-      TicketReference            = "CHG0050760"
-      DNSEntry                   = "csdasd"
-      DesignDocumentLink         = "acbv"
     }
     description = "Tags for WIndows Ec2 instances"
     type        = map(string)
