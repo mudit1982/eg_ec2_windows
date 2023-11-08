@@ -42,6 +42,12 @@ variable "instance_profile_name" {
   description = "The Instance Profile Name"
 }
 
+variable "private_ip" {
+  type        = string
+  description = "Private IP address to associate with the instance in the VPC"
+  default     = null
+}
+
 variable "security_group_enabled" {
   type        = bool
   description = "Whether to create default Security Group for EC2."

@@ -84,6 +84,7 @@ resource "aws_instance" "project-iac-ec2-windows" {
   associate_public_ip_address 		     = var.associate_public_ip_address
   # iam_instance_profile                 = aws_iam_role.iam.name
   iam_instance_profile                  = aws_iam_instance_profile.test_profile.name
+  private_ip                           = var.private_ip 
   key_name                             = var.key_name
   subnet_id                            = var.subnet_id
   monitoring                           = var.monitoring
@@ -116,16 +117,16 @@ lifecycle {
 
 }
 
-resource "aws_network_interface" "project-iac-ec2-windows-ni" {
-  subnet_id       = var.subnet_id
-  private_ips     = ["10.0.0.8"]
+# resource "aws_network_interface" "project-iac-ec2-windows-ni" {
+#   subnet_id       = var.subnet_id
+#   private_ips     = ["10.0.0.8"]
   
-  attachment {
-    instance     = aws_instance.project-iac-ec2-windows.id
-    device_index = 1
-  }
-  depends_on = [aws_instance.project-iac-ec2-windows]
-}
+#   attachment {
+#     instance     = aws_instance.project-iac-ec2-windows.id
+#     device_index = 1
+#   }
+#   depends_on = [aws_instance.project-iac-ec2-windows]
+# }
 
 
   module "ebs_volume" {

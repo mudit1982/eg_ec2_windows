@@ -10,6 +10,7 @@ root_volume_size ="40"
 ebs_volume_count ="2"
 security_groups = ["sg3","sg4"]
 instance_profile_name="test_profile_new"
+private_ip="10.0.0.8"
 
 ec2_tags = {
       InstanceIP                 = "10.x.x.x"
