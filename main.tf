@@ -36,34 +36,7 @@ resource "aws_iam_instance_profile" "test_profile" {
   name = var.instance_profile_name
   role = "${aws_iam_role.iam.name}"
 }
-# resource "aws_security_group" "security_groups" {
-    
-  #     count       = length(var.security_groups)
-  #     name        = var.security_groups[count.index]
-#     description = var.security_group_description
-#     vpc_id      = var.vpc_id
-#    dynamic "ingress" {
-#     for_each = var.ingress_security_group_rules
-#     content {
-#     from_port                   = ingress.value.from_port
-#     to_port                     = ingress.value.to_port
-#     protocol                    = ingress.value.protocol
-#     cidr_blocks                 = ingress.value.cidr_blocks
-#     description                 = ingress.value.description
-#     }
-#     }
-#     dynamic "egress" {
-#     for_each = var.egress_security_group_rules
-#     content {
-#     from_port                   = egress.value.from_port
-#     to_port                     = egress.value.to_port
-#     protocol                    = egress.value.protocol
-#     cidr_blocks                 = egress.value.cidr_blocks
-#     description                 = egress.value.description
-#     }
-#     }
-#     tags        = var.tags
-# }
+
 
 module "aws_security_group" {
   source      = "./modules/security_group"
@@ -76,6 +49,7 @@ module "aws_security_group" {
 
 
 resource "aws_security_group_rule" "ingress_rules" {
+
   count = length(var.ingress_rules)
 
   type              = "ingress"
@@ -91,11 +65,11 @@ resource "aws_security_group_rule" "ingress_rules" {
 resource "aws_security_group_rule" "egress_rules" {
   count = length(var.egress_rules)
   type              = "egress"
-  from_port         = var.ingress_rules[count.index].from_port
-  to_port           = var.ingress_rules[count.index].to_port
-  protocol          = var.ingress_rules[count.index].protocol
-  cidr_blocks       = [var.ingress_rules[count.index].cidr_block]
-  description       = var.ingress_rules[count.index].description
+  from_port         = var.egress_rules[count.index].from_port
+  to_port           = var.egress_rules[count.index].to_port
+  protocol          = var.egress_rules[count.index].protocol
+  cidr_blocks       = [var.egress_rules[count.index].cidr_block]
+  description       = var.egress_rules[count.index].description
   security_group_id = module.aws_security_group.id[count.index]
 }
 
@@ -126,10 +100,14 @@ resource "aws_instance" "project-iac-ec2-windows" {
   }
 
  depends_on = [module.aws_security_group.security_groups, aws_iam_role.iam]
-tags = merge(tomap(var.ec2_tags),{ApplicationFunctionality = var.ApplicationFunctionality, 
-      ApplicationDescription= var.ApplicationDescription, ApplicationOwner = var.ApplicationOwner, 
-      ApplicationTeam = var.ApplicationTeam, BackupSchedule =var.BackupSchedule,
-      BusinessOwner = var.BusinessOwner,ServiceCriticality =var.ServiceCriticality,Subnet-id = var.subnet_id,
+ tags = merge(tomap(var.ec2_tags),{ApplicationFunctionality = var.ApplicationFunctionality, 
+      ApplicationDescription= var.ApplicationDescription, 
+      ApplicationOwner = var.ApplicationOwner, 
+      ApplicationTeam = var.ApplicationTeam, 
+      BackupSchedule =var.BackupSchedule,
+      BusinessOwner = var.BusinessOwner,
+      ServiceCriticality = var.ServiceCriticality,
+      Subnet-id = var.subnet_id,
       VPC-id = var.vpc_id})
 
 lifecycle {
@@ -149,17 +127,7 @@ resource "aws_network_interface" "project-iac-ec2-windows-ni" {
   }
   depends_on = [aws_instance.project-iac-ec2-windows]
 }
-# resource "aws_ebs_volume" "default" {
-#   count             = local.volume_count
-#   availability_zone = var.availability_zone
-#   size              = var.ebs_volume_size
-#   iops              = local.ebs_iops
-#   throughput        = local.ebs_throughput
-#   type              = var.ebs_volume_type
-#   tags              = var.tags
-#   encrypted         = var.ebs_volume_encrypted
-#   #kms_key_id        = var.kms_key_id
-# } 
+
 
   module "ebs_volume" {
     source = "./modules/ebs_volume"
