@@ -148,13 +148,6 @@ variable "monitoring" {
   default     = true
 }
 
-variable "private_ip" {
-  type        = string
-  description = "Private IP address to associate with the instance in the VPC"
-  default     = null
-}
-
-
 variable "root_volume_type" {
   type        = string
   description = "Type of root volume. Can be standard, gp2, gp3, io1 or io2"
