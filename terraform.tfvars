@@ -14,7 +14,7 @@ private_ip="10.0.0.8"
 
 ec2_tags = {
       InstanceIP                 = "10.x.x.x"
-      Name                       = "SSB-WPX-001-P-Windows"
+      Name                       = "SSB-WPX-001-P"
       OperatingSystem            = "Windows Server 2022"
       OperatingSystemSupportTeam = "test@hotmail.com"
       scheduler                  = "ec2-startstop"

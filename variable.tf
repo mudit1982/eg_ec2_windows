@@ -148,6 +148,7 @@ variable "monitoring" {
   default     = true
 }
 
+
 variable "root_volume_type" {
   type        = string
   description = "Type of root volume. Can be standard, gp2, gp3, io1 or io2"
