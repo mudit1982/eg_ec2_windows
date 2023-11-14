@@ -123,7 +123,6 @@ variable "region" {
 variable "ACCTID" {
   type        = number
   description = "AWS Account ID"
-  default     = ""
 }
 
 
