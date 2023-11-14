@@ -119,7 +119,6 @@ variable "region" {
 }
 
 
-
 variable "ACCTID" {
   type        = number
   description = "AWS Account ID"
@@ -224,6 +223,11 @@ variable "delete_on_termination" {
   default     = true
 }
 
+variable "reboot_metric_threshold" {
+  type        = number
+  default     = 0
+  description = "The value against which the specified statistic is compared."
+}
 
 variable "reboot_evaluation_period" {
   type        = string
