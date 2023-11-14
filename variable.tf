@@ -118,6 +118,15 @@ variable "region" {
   default     = ""
 }
 
+
+
+variable "ACCTID" {
+  type        = number
+  description = "AWS Account ID"
+  default     = ""
+}
+
+
 variable "instance_name" {
   type        = string
   default     = "test"
@@ -217,6 +226,71 @@ variable "delete_on_termination" {
 }
 
 
+variable "reboot_evaluation_period" {
+  type        = string
+  default     = "3"
+  description = "The evaluation period over which to use when triggering alarms."
+}
+
+variable "recover_evaluation_period" {
+  type        = string
+  default     = "2"
+  description = "The evaluation period over which to use when triggering alarms."
+}
+variable "reboot_statistic_period" {
+  type        = string
+  default     = "Minimum"
+  description = "The number of seconds that make each statistic period."
+}
+variable "recover_statistic_period" {
+  type        = string
+  default     = "Minimum"
+  description = "The number of seconds that make each statistic period."
+}
+
+variable "reboot_metric_name" {
+  type        = string
+  default     = "StatusCheckFailed"
+  description = "The name for the alarm's associated metric."
+}
+variable "recover_metric_name" {
+  type        = string
+  default     = "StatusCheckFailed_System"
+  description = "The name for the alarm's associated metric."
+}
+variable "reboot_period" {
+  type        = number
+  default     = 60
+  description = "The period in seconds over which the specified statistic is applied."
+}
+variable "recover_period" {
+  type        = number
+  default     = 60
+  description = "The period in seconds over which the specified statistic is applied."
+}
+
+variable "reboot_actions_alarm" {
+  type        = list
+  default     = ["arn:aws:automate:us-east-2:ec2:reboot"]
+  description = "A list of actions to take when alarms are triggered. Will likely be an SNS topic for event distribution."
+}
+variable "recover_actions_alarm" {
+  type        = list
+  default     = ["arn:aws:automate:us-east-2:ec2:recover"]
+  description = "A list of actions to take when alarms are triggered. Will likely be an SNS topic for event distribution."
+}
+
+# variable "reboot_actions_ok" {
+#   type        = list
+#   default     = ["arn:aws:sns:us-east-2:215691912540:Ec2RebootRecover"]
+#   description = "A list of actions to take when alarms are cleared. Will likely be an SNS topic for event distribution."
+# }
+# variable "recover_actions_ok" {
+#   type        = list
+#   default     = ["arn:aws:sns:us-east-2:215691912540:Ec2RebootRecover"]
+#   description = "A list of actions to take when alarms are cleared. Will likely be an SNS topic for event distribution."
+# }
+
 variable "Environment" {
   type    = string
   default = "Dev"
@@ -311,6 +385,7 @@ variable "ServiceCriticality" {
    error_message = "Please provide a valid Service Criticality, Valid values are High, Low and Medium"
  }
 }
+
 
 variable "ec2_tags" {
     default = {
