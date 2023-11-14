@@ -6,6 +6,8 @@ locals {
   root_throughput        = var.root_volume_type == "gp3" ? var.root_throughput : null
   ebs_throughput         = var.ebs_volume_type == "gp3" ? var.ebs_throughput : null
   root_volume_type       = var.root_volume_type
+  reboot_actions_ok   =  "arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"
+  recover_actions_ok  =  "arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"
 }
 
 
@@ -144,26 +146,43 @@ resource "aws_volume_attachment" "project-iac-volume-attachment" {
 }
 
 
-resource "aws_cloudwatch_metric_alarm" "project-iac-cloudwatch-alarm" {
-  alarm_name                = "terraform-test-cloudwatch-alarm-windows"
-  comparison_operator       = "GreaterThanOrEqualToThreshold"
-  evaluation_periods        = 15
-  metric_name               = "CPUUtilization"
+
+resource "aws_cloudwatch_metric_alarm" "reboot-alarm" {
+  alarm_name                = "RebootAlarm"
+  comparison_operator       = "GreaterThanThreshold"
+  evaluation_periods        =  var.reboot_evaluation_period
+  metric_name               =  var.reboot_metric_name
   namespace                 = "AWS/EC2"
-  period                    = 60
-  statistic                 = "Average"
-  threshold                 = 80
-  alarm_description         = "This metric monitors ec2 cpu utilization"
-  actions_enabled     = "true"
- alarm_actions       = ["arn:aws:automate:us-east-2:ec2:reboot"]
+  period                    =  var.reboot_period
+  statistic                 =  var.reboot_statistic_period
+  threshold                 =  var.reboot_metric_threshold
+  alarm_description         = "Trigger a reboot action when instance satus check fails for 15 consecutive minutes"
+  actions_enabled           = "true"
+  # alarm_actions             = var.reboot_actions_alarm
+  # ok_actions                = var.reboot_actions_ok
+  alarm_actions             = var.reboot_actions_alarm
+  ok_actions                = local.reboot_actions_ok
     dimensions = {
         InstanceId = aws_instance.project-iac-ec2-windows.id
       }
   }
-
-
-
-
+resource "aws_cloudwatch_metric_alarm" "recover-alarm" {
+  alarm_name                = "RecoverAlarm"
+  comparison_operator       = "GreaterThanThreshold"
+  evaluation_periods        =  var.recover_evaluation_period
+  metric_name               =  var.recover_metric_name
+  namespace                 = "AWS/EC2"
+  period                    =  var.recover_period
+  statistic                 =  var.recover_statistic_period
+  threshold                 =  var.recover_metric_threshold
+  alarm_description         = "Trigger a recover action when instance status check fails for 15 consecutive minutes"
+  actions_enabled           = "true"
+  alarm_actions             = var.recover_actions_alarm
+  ok_actions                = local.recover_actions_ok
+    dimensions = {
+        InstanceId = aws_instance.project-iac-ec2-windows.id
+      }
+  }
 
 
 
