@@ -6,8 +6,8 @@ locals {
   root_throughput        = var.root_volume_type == "gp3" ? var.root_throughput : null
   ebs_throughput         = var.ebs_volume_type == "gp3" ? var.ebs_throughput : null
   root_volume_type       = var.root_volume_type
-  reboot_actions_ok   =  "arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"
-  recover_actions_ok  =  "arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"
+  reboot_actions_ok   =  ["arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"]
+  recover_actions_ok  =  ["arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"]
 }
 
 
