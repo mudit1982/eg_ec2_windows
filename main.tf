@@ -57,10 +57,10 @@ module "new_security_group" {
 }
 
 
-# module "existing_sg_rules" {
-#   source = "./modules/existing_sg_rules"
-#   existing_sg_rules = var.existing_sg_rules
-# }
+module "existing_sg_rules" {
+  source = "./modules/existing_sg_rules"
+  existing_sg_rules = var.existing_sg_rules
+}
 
 
 
@@ -129,7 +129,7 @@ resource "aws_instance" "project-iac-ec2-windows" {
       ApplicationTeam = var.ApplicationTeam, 
       BackupSchedule =var.BackupSchedule,
       BusinessOwner = var.BusinessOwner,
-      ServiceCriticality = var.ServiceCriticality,
+      ServiceCriticality = var.ServiceCriticaslity,
       Subnet-id = var.subnet_id,
       VPC-id = var.vpc_id})
 
