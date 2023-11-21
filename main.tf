@@ -40,57 +40,57 @@ resource "aws_iam_instance_profile" "test_profile" {
 }
 
 
-# module "aws_security_group" {
-#   source      = "./modules/security_group"
-#   sg_count = length(var.security_groups)
-#   name = var.security_groups
-#   description = var.secgroupdescription
-#   vpc_id      = var.vpc_id
+module "aws_security_group" {
+  source      = "./modules/security_group"
+  sg_count = length(var.security_groups)
+  name = var.security_groups
+  description = var.secgroupdescription
+  vpc_id      = var.vpc_id
 
-# } 
-
-
-module "new_security_group" {
-  source = "./modules/security_group_new"
-  security_rules = var.security_rules  
-  vpc_id = var.vpc_id
-}
+} 
 
 
-module "existing_sg_rules" {
-  source = "./modules/existing_sg_rules"
-  existing_sg_rules = var.existing_sg_rules
-}
-
-
-
-
-
-
-# resource "aws_security_group_rule" "ingress_rules" {
-
-#   count = length(var.ingress_rules)
-
-#   type              = "ingress"
-#   from_port         = var.ingress_rules[count.index].from_port
-#   to_port           = var.ingress_rules[count.index].to_port
-#   protocol          = var.ingress_rules[count.index].protocol
-#   cidr_blocks       = [var.ingress_rules[count.index].cidr_block]
-#   description       = var.ingress_rules[count.index].description
-#   security_group_id = module.aws_security_group.id[count.index]
+# module "new_security_group" {
+#   source = "./modules/security_group_new"
+#   security_rules = var.security_rules  
+#   vpc_id = var.vpc_id
 # }
 
 
-# resource "aws_security_group_rule" "egress_rules" {
-#   count = length(var.egress_rules)
-#   type              = "egress"
-#   from_port         = var.egress_rules[count.index].from_port
-#   to_port           = var.egress_rules[count.index].to_port
-#   protocol          = var.egress_rules[count.index].protocol
-#   cidr_blocks       = [var.egress_rules[count.index].cidr_block]
-#   description       = var.egress_rules[count.index].description
-#   security_group_id = module.aws_security_group.id[count.index]
+# module "existing_sg_rules" {
+#   source = "./modules/existing_sg_rules"
+#   existing_sg_rules = var.existing_sg_rules
 # }
+
+
+
+
+
+
+resource "aws_security_group_rule" "ingress_rules" {
+
+  count = length(var.ingress_rules)
+
+  type              = "ingress"
+  from_port         = var.ingress_rules[count.index].from_port
+  to_port           = var.ingress_rules[count.index].to_port
+  protocol          = var.ingress_rules[count.index].protocol
+  cidr_blocks       = [var.ingress_rules[count.index].cidr_block]
+  description       = var.ingress_rules[count.index].description
+  security_group_id = module.aws_security_group.id[count.index]
+}
+
+
+resource "aws_security_group_rule" "egress_rules" {
+  count = length(var.egress_rules)
+  type              = "egress"
+  from_port         = var.egress_rules[count.index].from_port
+  to_port           = var.egress_rules[count.index].to_port
+  protocol          = var.egress_rules[count.index].protocol
+  cidr_blocks       = [var.egress_rules[count.index].cidr_block]
+  description       = var.egress_rules[count.index].description
+  security_group_id = module.aws_security_group.id[count.index]
+}
 
 
 
@@ -108,8 +108,8 @@ resource "aws_instance" "project-iac-ec2-windows" {
   subnet_id                            = var.subnet_id
   monitoring                           = var.monitoring
   # vpc_security_group_ids = concat(module.aws_security_group.security_groups[*].id,var.security_group_ids[*])
-  # vpc_security_group_ids = concat(module.aws_security_group.id[*],var.security_group_ids[*])
-  vpc_security_group_ids = module.new_security_group.id[*]
+  vpc_security_group_ids = concat(module.aws_security_group.id[*],var.security_group_ids[*])
+
   root_block_device {
     volume_type           = var.root_volume_type
     volume_size           = var.root_volume_size
@@ -120,8 +120,8 @@ resource "aws_instance" "project-iac-ec2-windows" {
     #kms_key_id            = var.root_block_device_kms_key_id
   }
 
-#  depends_on = [module.aws_security_group.security_groups, aws_iam_role.iam]
- depends_on = [module.new_security_group.rds_security_groups, aws_iam_role.iam]
+ depends_on = [module.aws_security_group.security_groups, aws_iam_role.iam]
+#  depends_on = [module.new_security_group.rds_security_groups, aws_iam_role.iam]
 
  tags = merge(tomap(var.ec2_tags),{ApplicationFunctionality = var.ApplicationFunctionality, 
       ApplicationDescription= var.ApplicationDescription, 
