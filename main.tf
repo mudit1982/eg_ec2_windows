@@ -109,7 +109,7 @@ resource "aws_instance" "project-iac-ec2-windows" {
   monitoring                           = var.monitoring
   # vpc_security_group_ids = concat(module.aws_security_group.security_groups[*].id,var.security_group_ids[*])
   # vpc_security_group_ids = concat(module.aws_security_group.id[*],var.security_group_ids[*])
-  vpc_security_group_ids = module.security_group_new.id[*]
+  vpc_security_group_ids = module.new_security_group.id[*]
   root_block_device {
     volume_type           = var.root_volume_type
     volume_size           = var.root_volume_size
@@ -120,7 +120,9 @@ resource "aws_instance" "project-iac-ec2-windows" {
     #kms_key_id            = var.root_block_device_kms_key_id
   }
 
- depends_on = [module.aws_security_group.security_groups, aws_iam_role.iam]
+#  depends_on = [module.aws_security_group.security_groups, aws_iam_role.iam]
+ depends_on = [module.security_group_new.rds_security_groups, aws_iam_role.iam]
+
  tags = merge(tomap(var.ec2_tags),{ApplicationFunctionality = var.ApplicationFunctionality, 
       ApplicationDescription= var.ApplicationDescription, 
       ApplicationOwner = var.ApplicationOwner, 

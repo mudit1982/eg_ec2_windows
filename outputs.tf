@@ -69,8 +69,13 @@ output "alarm" {
 # }
 
 
-output "security_group_id" {
-  value = module.aws_security_group[*].id
-}    
+# output "security_group_id" {
+#   value = module.aws_security_group[*].id
+# }    
+
+
+# output "security_group_id" {
+#   value = module.security_group_new[*].id
+# }   
 
 
