@@ -129,7 +129,7 @@ resource "aws_instance" "project-iac-ec2-windows" {
       ApplicationTeam = var.ApplicationTeam, 
       BackupSchedule =var.BackupSchedule,
       BusinessOwner = var.BusinessOwner,
-      ServiceCriticality = var.ServiceCriticaslity,
+      ServiceCriticality = var.ServiceCriticality,
       Subnet-id = var.subnet_id,
       VPC-id = var.vpc_id})
 
