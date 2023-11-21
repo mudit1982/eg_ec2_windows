@@ -121,7 +121,7 @@ resource "aws_instance" "project-iac-ec2-windows" {
   }
 
 #  depends_on = [module.aws_security_group.security_groups, aws_iam_role.iam]
- depends_on = [module.security_group_new.rds_security_groups, aws_iam_role.iam]
+ depends_on = [module.new_security_group.rds_security_groups, aws_iam_role.iam]
 
  tags = merge(tomap(var.ec2_tags),{ApplicationFunctionality = var.ApplicationFunctionality, 
       ApplicationDescription= var.ApplicationDescription, 
