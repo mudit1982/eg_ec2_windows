@@ -74,8 +74,8 @@ output "alarm" {
 # }    
 
 
-# output "security_group_id" {
-#   value = module.security_group_new[*].id
-# }   
+output "security_group_id" {
+  value = module.new_security_group[*].id
+}   
 
 
