@@ -109,6 +109,7 @@ resource "aws_instance" "project-iac-ec2-windows" {
   key_name                             = var.key_name
   subnet_id                            = var.subnet_id
   monitoring                           = var.monitoring
+  disable_api_termination              = true
   # vpc_security_group_ids = concat(module.aws_security_group.security_groups[*].id,var.security_group_ids[*])
   vpc_security_group_ids = concat(module.new_security_group.id[*],var.security_group_ids[*])
 
