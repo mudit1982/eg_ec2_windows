@@ -101,7 +101,7 @@ resource "aws_instance" "project-iac-ec2-windows" {
   availability_zone                    = var.availability_zone
   instance_type                        = var.instance_type
   # ebs_optimized                        = var.ebs_optimized
-  disable_api_termination              = false
+  disable_api_termination              = true
   associate_public_ip_address 		     = var.associate_public_ip_address
   # iam_instance_profile                 = aws_iam_role.iam.name
   iam_instance_profile                  = aws_iam_instance_profile.test_profile.name
@@ -109,7 +109,7 @@ resource "aws_instance" "project-iac-ec2-windows" {
   key_name                             = var.key_name
   subnet_id                            = var.subnet_id
   monitoring                           = var.monitoring
-  disable_api_termination              = true
+
   # vpc_security_group_ids = concat(module.aws_security_group.security_groups[*].id,var.security_group_ids[*])
   vpc_security_group_ids = concat(module.new_security_group.id[*],var.security_group_ids[*])
 
