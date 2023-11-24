@@ -405,6 +405,12 @@ variable "ec2_tags" {
   }
 
 
+
+variable "eip_allocation_id" {
+  type        = string
+  description = "Allocation ID of the elastic IP to be attached"
+}
+
 variable "secgroupdescription" {
   type = string
   default = "Allow tcp to client host"

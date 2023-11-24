@@ -1,6 +1,6 @@
 region="us-east-2"
 ACCTID=215691912540
-iam_name = "terraform-ec2-windows"
+# iam_name = "terraform-ec2-windows"
 vpc_id  = "vpc-0777935da25d06fe3"
 ami_id  = "ami-00744e52917f35c39"
 availability_zone = "us-east-2a"
@@ -13,6 +13,7 @@ ebs_volume_count ="2"
 security_groups = ["sg3","sg4"]
 instance_profile_name="test_profile_new"
 private_ip="10.0.0.8"
+eip_allocation_id="eipalloc-0f34da2b4c3f4724f"
 
 ec2_tags = {
       InstanceIP                 = "10.x.x.x"

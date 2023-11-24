@@ -8,6 +8,7 @@ locals {
   root_volume_type       = var.root_volume_type
   reboot_actions_ok   =  ["arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"]
   recover_actions_ok  =  ["arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"]
+  iam_name            =  ${var.lookup(ec2_tags , Name)}_IaM_Role
 }
 
 
@@ -27,7 +28,7 @@ data "aws_iam_policy_document" "default" {
   }
 }
 resource "aws_iam_role" "iam" {
-  name                 = var.iam_name
+  name                 = local.iam_name
   path                 = "/"
   assume_role_policy   = data.aws_iam_policy_document.default.json
   #permissions_boundary = var.permissions_boundary_arn
@@ -115,7 +116,7 @@ resource "aws_instance" "project-iac-ec2-windows" {
     volume_size           = var.root_volume_size
     iops                  = local.root_iops
     throughput            = local.root_throughput
-    delete_on_termination = false
+    delete_on_termination = true
     encrypted             = true
     #kms_key_id            = var.root_block_device_kms_key_id
   }
@@ -137,6 +138,11 @@ lifecycle {
      ignore_changes = [ami]
      }
 
+}
+
+resource "aws_eip_association" "eip_assoc" {
+  instance_id   = aws_instance.project-iac-ec2-windows.id
+  allocation_id = var.eip_allocation_id
 }
 
 # resource "aws_network_interface" "project-iac-ec2-windows-ni" {
