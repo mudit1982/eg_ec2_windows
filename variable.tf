@@ -113,9 +113,14 @@ variable "egress_security_group_rules" {
     }
   ]
 }
-variable "subnet_id" {
+# variable "subnet_id" {
+#   type        = string
+#   description = "VPC Subnet ID the instance is launched in"
+# }
+
+variable "Subnet_Name" {
   type        = string
-  description = "VPC Subnet ID the instance is launched in"
+  description = "Name of the Subnet ID for EC2 Instance"
 }
 
 variable "region" {
