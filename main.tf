@@ -160,7 +160,7 @@ lifecycle {
 
 resource "aws_eip_association" "eip_assoc" {
   # count = contains(["Public","public","PUBLIC"], var.Subnet_Name) ? 0 : 1
-  count       = strcontains(${var.Subnet_Name}, "public") ? 1: 0
+  count       = strcontains(var.Subnet_Name, "public") ? 1: 0
   # count = strcontains("hello world", "wor") ? 1 : 0
   instance_id   = aws_instance.project-iac-ec2-windows.id
   allocation_id = var.eip_allocation_id
