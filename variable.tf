@@ -28,7 +28,7 @@ variable "instance_type" {
 }
 
 variable "Name" {
-  type        = list(string)
+  type        = string
   description = "Name of the EC2 instance"
 }
 
