@@ -11,6 +11,7 @@ locals {
   # iam_name            =  lookup(var.ec2_tags , "Name")
   # iam_name            = join("_", [var.Name, "IaM_Role"])  
   iam_name  =  join("_", [lookup(var.ec2_tags , "Name"), "IaM_Role"])
+  subnet_type           = contains(["Private", var.Subnet_Name])
   # iam_name_format     = ${local.iam_name}_IAM_Role
 }
 
@@ -43,6 +44,14 @@ resource "aws_iam_role" "iam" {
 resource "aws_iam_instance_profile" "test_profile" {
   name = var.instance_profile_name
   role = "${aws_iam_role.iam.name}"
+}
+
+data "aws_subnet_ids" "test" {
+  vpc_id = var.vpc_id
+
+  tags = {
+    Name = var.Subnet_Name
+  }
 }
 
 
@@ -111,7 +120,8 @@ resource "aws_instance" "project-iac-ec2-windows" {
   iam_instance_profile                  = aws_iam_instance_profile.test_profile.name
   private_ip                           = var.private_ip 
   key_name                             = var.key_name
-  subnet_id                            = var.subnet_id
+  # subnet_id                            = var.subnet_id
+  subnet_id           =  data.aws_subnet_ids.test.id
   monitoring                           = var.monitoring
 
   # vpc_security_group_ids = concat(module.aws_security_group.security_groups[*].id,var.security_group_ids[*])
@@ -147,6 +157,7 @@ lifecycle {
 }
 
 resource "aws_eip_association" "eip_assoc" {
+  count = contains(["Public", var.Subnet_Name]) ? 1 : 0
   instance_id   = aws_instance.project-iac-ec2-windows.id
   allocation_id = var.eip_allocation_id
 }
