@@ -46,7 +46,7 @@ resource "aws_iam_instance_profile" "test_profile" {
   role = "${aws_iam_role.iam.name}"
 }
 
-data "aws_subnet_ids" "test" {
+data "aws_subnet" "test" {
   vpc_id = var.vpc_id
 
   tags = {
@@ -157,7 +157,7 @@ lifecycle {
 }
 
 resource "aws_eip_association" "eip_assoc" {
-  count = contains(["Public", var.Subnet_Name]) ? 1 : 0
+  count = contains(["Public","public","PUBLIC"], var.Subnet_Name) ? 1 : 0
   instance_id   = aws_instance.project-iac-ec2-windows.id
   allocation_id = var.eip_allocation_id
 }
