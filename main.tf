@@ -9,7 +9,8 @@ locals {
   reboot_actions_ok   =  ["arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"]
   recover_actions_ok  =  ["arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"]
   # iam_name            =  lookup(var.ec2_tags , "Name")
-  iam_name_eg_format  =  join("_ ", [lookup(var.ec2_tags , "Name"), "IaM_Role"])
+  iam_name            = join("_ ", [lookup(var.ec2_tags , "Name"), "IaM_Role"])
+  # iam_name_eg_format  =  join("_ ", [lookup(var.ec2_tags , "Name"), "IaM_Role"])
   # iam_name_format     = ${local.iam_name}_IAM_Role
 }
 
@@ -31,7 +32,7 @@ data "aws_iam_policy_document" "default" {
 }
 resource "aws_iam_role" "iam" {
   # name                 = local.iam_name
-  name = local.iam_name_eg_format
+  name = local.iam_name
   # name  = join (local.iam_name)
   path                 = "/"
   assume_role_policy   = data.aws_iam_policy_document.default.json
