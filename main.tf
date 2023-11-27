@@ -9,8 +9,7 @@ locals {
   reboot_actions_ok   =  ["arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"]
   recover_actions_ok  =  ["arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"]
   # iam_name            =  lookup(var.ec2_tags , "Name")
-  # iam_name            = join("- ", [${var.Name}, "IaM-Role"]) 
-  iam_name     = $var.Name-Iam-Role
+  iam_name            = join("- ", [${var.Name}, "IaM-Role"]) 
   # iam_name_eg_format  =  join("_ ", [lookup(var.ec2_tags , "Name"), "IaM_Role"])
   # iam_name_format     = ${local.iam_name}_IAM_Role
 }
