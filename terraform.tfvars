@@ -14,10 +14,10 @@ security_groups = ["sg3","sg4"]
 instance_profile_name="test_profile_new"
 private_ip="10.0.0.8"
 eip_allocation_id="eipalloc-0f34da2b4c3f4724f"
+Name                       = "SSB-WPX-001-P"
 
 ec2_tags = {
       InstanceIP                 = "10.x.x.x"
-      Name                       = "SSB-WPX-001-P"
       OperatingSystem            = "Windows Server 2022"
       OperatingSystemSupportTeam = "test@hotmail.com"
       scheduler                  = "ec2-startstop"
