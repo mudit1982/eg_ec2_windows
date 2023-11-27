@@ -160,7 +160,7 @@ lifecycle {
 
 resource "aws_eip_association" "eip_assoc" {
   # count = contains(["Public","public","PUBLIC"], var.Subnet_Name) ? 0 : 1
-  count = local.Subnet_Type
+  count       = strcontains(var.Subnet_Name, "Public") ? 1: 0
   instance_id   = aws_instance.project-iac-ec2-windows.id
   allocation_id = var.eip_allocation_id
 }
@@ -185,7 +185,7 @@ resource "aws_eip_association" "eip_assoc" {
   }
 
 resource "aws_volume_attachment" "project-iac-volume-attachment" {
-  count       = strcontains(var.Subnet_Name, "Public") ? 1: 0
+
   device_name = var.ebs_device_name[count.index]
   volume_id   = module.ebs_volume.ebs_volume_id[count.index]
   instance_id = aws_instance.project-iac-ec2-windows.id
