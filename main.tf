@@ -185,7 +185,7 @@ resource "aws_eip_association" "eip_assoc" {
   }
 
 resource "aws_volume_attachment" "project-iac-volume-attachment" {
-
+  count       = local.volume_count
   device_name = var.ebs_device_name[count.index]
   volume_id   = module.ebs_volume.ebs_volume_id[count.index]
   instance_id = aws_instance.project-iac-ec2-windows.id
