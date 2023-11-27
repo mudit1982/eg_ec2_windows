@@ -9,7 +9,9 @@ locals {
   reboot_actions_ok   =  ["arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"]
   recover_actions_ok  =  ["arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"]
   # iam_name            =  lookup(var.ec2_tags , "Name")
-  Subnet_Type   =   contains(["*Public*", "*public", "*PUBLIC*"], var.Subnet_Name) ? 1 : 0
+  # Subnet_Type   = contains(regex("*Public*", var.Subnet_Name))
+  Subnet_Type = strcontains(var.Subnet_Name, "Public") # returns True
+  # Subnet_Type   =   contains(["*Public*", "*public", "*PUBLIC*"], var.Subnet_Name) ? 1 : 0
   # iam_name            = join("_", [var.Name, "IaM_Role"])  
   iam_name  =  join("_", [lookup(var.ec2_tags , "Name"), "IaM_Role"])
   # iam_name_format     = ${local.iam_name}_IAM_Role
