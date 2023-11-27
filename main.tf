@@ -10,7 +10,7 @@ locals {
   recover_actions_ok  =  ["arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"]
   # iam_name            =  lookup(var.ec2_tags , "Name")
   # Subnet_Type   = contains(regex("*Public*", var.Subnet_Name))
-  Subnet_Type = strcontains(var.Subnet_Name, "Public") # returns True
+  # Subnet_Type = strcontains(var.Subnet_Name, "Public") # returns True
   # Subnet_Type   =   contains(["*Public*", "*public", "*PUBLIC*"], var.Subnet_Name) ? 1 : 0
   # iam_name            = join("_", [var.Name, "IaM_Role"])  
   iam_name  =  join("_", [lookup(var.ec2_tags , "Name"), "IaM_Role"])
@@ -185,7 +185,7 @@ resource "aws_eip_association" "eip_assoc" {
   }
 
 resource "aws_volume_attachment" "project-iac-volume-attachment" {
-  count       = local.volume_count
+  count       = strcontains(var.Subnet_Name, "Public") ? 1: 0
   device_name = var.ebs_device_name[count.index]
   volume_id   = module.ebs_volume.ebs_volume_id[count.index]
   instance_id = aws_instance.project-iac-ec2-windows.id
