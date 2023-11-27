@@ -27,10 +27,10 @@ variable "instance_type" {
   description = "The type of the instance"
 }
 
-variable "Name" {
-  type        = string
-  description = "Name of the EC2 instance"
-}
+# variable "Name" {
+#   type        = string
+#   description = "Name of the EC2 instance"
+# }
 
 variable "ami_id" {
   type        = string
