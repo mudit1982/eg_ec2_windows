@@ -29,7 +29,8 @@ data "aws_iam_policy_document" "default" {
   }
 }
 resource "aws_iam_role" "iam" {
-  name                 = local.iam_name
+  # name                 = local.iam_name
+  name = join("_ ", [local.iam_name, "IaM_Role"])
   # name  = join (local.iam_name)
   path                 = "/"
   assume_role_policy   = data.aws_iam_policy_document.default.json
