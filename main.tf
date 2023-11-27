@@ -11,7 +11,6 @@ locals {
   # iam_name            =  lookup(var.ec2_tags , "Name")
   # iam_name            = join("_", [var.Name, "IaM_Role"])  
   iam_name  =  join("_", [lookup(var.ec2_tags , "Name"), "IaM_Role"])
-  subnet_type           = contains(["Private", var.Subnet_Name])
   # iam_name_format     = ${local.iam_name}_IAM_Role
 }
 
@@ -121,7 +120,7 @@ resource "aws_instance" "project-iac-ec2-windows" {
   private_ip                           = var.private_ip 
   key_name                             = var.key_name
   # subnet_id                            = var.subnet_id
-  subnet_id           =  data.aws_subnet_ids.test.id
+  subnet_id           =  data.aws_subnet.test.id
   monitoring                           = var.monitoring
 
   # vpc_security_group_ids = concat(module.aws_security_group.security_groups[*].id,var.security_group_ids[*])
