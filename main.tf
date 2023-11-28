@@ -9,6 +9,17 @@ locals {
   reboot_actions_ok   =  ["arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"]
   recover_actions_ok  =  ["arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"] 
   iam_name  =  join("_", [lookup(var.ec2_tags , "Name"), "IaM_Role"])
+  security_rules = {
+  join("_", ["SG", lookup(var.ec2_tags , "Name"), "InstanceSecurityGroup"]) = {
+    "rule1" = { type = "ingress", from_port = 22, to_port = 22, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], description = "For SSH" },
+    "rule2" = { type = "ingress", from_port = 443, to_port = 443, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], description = "For SSH" },
+    "rule3" = { type = "egress", from_port = 22, to_port = 22, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], description = "For SSH" }
+  }
+  # sg_demo4 = {
+  #   "rule1" = { type = "ingress", from_port = 22, to_port = 22, protocol = "tcp" , cidr_blocks = ["0.0.0.0/0"], description = "For SSH"}
+  # }
+}
+
 }
 
 
@@ -63,7 +74,8 @@ data "aws_subnet" "test" {
 
 module "new_security_group" {
   source = "./modules/security_group_new"
-  security_rules = var.security_rules  
+  # security_rules = var.security_rules  
+  security_rules = local.security_rules  
   vpc_id = var.vpc_id
 }
 
