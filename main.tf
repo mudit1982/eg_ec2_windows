@@ -1,20 +1,14 @@
 locals {
   volume_count   		     = var.ebs_volume_count
-  security_group_enabled = var.enabled && var.security_group_enabled
+  root_volume_type       = var.root_volume_type
   root_iops              = contains(["io1", "io2", "gp3"], var.root_volume_type) ? var.root_iops : null
   ebs_iops               = contains(["io1", "io2", "gp3"], var.ebs_volume_type) ? var.ebs_iops : null
   root_throughput        = var.root_volume_type == "gp3" ? var.root_throughput : null
   ebs_throughput         = var.ebs_volume_type == "gp3" ? var.ebs_throughput : null
-  root_volume_type       = var.root_volume_type
+
   reboot_actions_ok   =  ["arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"]
-  recover_actions_ok  =  ["arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"]
-  # iam_name            =  lookup(var.ec2_tags , "Name")
-  # Subnet_Type   = contains(regex("*Public*", var.Subnet_Name))
-  # Subnet_Type = strcontains(var.Subnet_Name, "Public") # returns True
-  # Subnet_Type   =   contains(["*Public*", "*public", "*PUBLIC*"], var.Subnet_Name) ? 1 : 0
-  # iam_name            = join("_", [var.Name, "IaM_Role"])  
+  recover_actions_ok  =  ["arn:aws:sns:${var.region}:${var.ACCTID}:Ec2RebootRecover"] 
   iam_name  =  join("_", [lookup(var.ec2_tags , "Name"), "IaM_Role"])
-  # iam_name_format     = ${local.iam_name}_IAM_Role
 }
 
 
@@ -83,34 +77,6 @@ module "existing_sg_rules" {
 
 
 
-
-# resource "aws_security_group_rule" "ingress_rules" {
-
-#   count = length(var.ingress_rules)
-
-#   type              = "ingress"
-#   from_port         = var.ingress_rules[count.index].from_port
-#   to_port           = var.ingress_rules[count.index].to_port
-#   protocol          = var.ingress_rules[count.index].protocol
-#   cidr_blocks       = [var.ingress_rules[count.index].cidr_block]
-#   description       = var.ingress_rules[count.index].description
-#   security_group_id = module.new_security_group.id[count.index]
-# }
-
-
-# resource "aws_security_group_rule" "egress_rules" {
-#   count = length(var.egress_rules)
-#   type              = "egress"
-#   from_port         = var.egress_rules[count.index].from_port
-#   to_port           = var.egress_rules[count.index].to_port
-#   protocol          = var.egress_rules[count.index].protocol
-#   cidr_blocks       = [var.egress_rules[count.index].cidr_block]
-#   description       = var.egress_rules[count.index].description
-#   security_group_id = module.aws_security_group.id[count.index]
-# }
-
-
-
 resource "aws_instance" "project-iac-ec2-windows" {
   ami                                  = var.ami_id
   availability_zone                    = var.availability_zone
@@ -118,12 +84,10 @@ resource "aws_instance" "project-iac-ec2-windows" {
   # ebs_optimized                        = var.ebs_optimized
   disable_api_termination              = true
   associate_public_ip_address 		     = var.associate_public_ip_address
-  # iam_instance_profile                 = aws_iam_role.iam.name
-  iam_instance_profile                  = aws_iam_instance_profile.test_profile.name
+  iam_instance_profile                 = aws_iam_instance_profile.test_profile.name
   private_ip                           = var.private_ip 
   key_name                             = var.key_name
-  # subnet_id                            = var.subnet_id
-  subnet_id           =  data.aws_subnet.test.id
+  subnet_id                            =  data.aws_subnet.test.id
   monitoring                           = var.monitoring
 
   # vpc_security_group_ids = concat(module.aws_security_group.security_groups[*].id,var.security_group_ids[*])
@@ -139,7 +103,6 @@ resource "aws_instance" "project-iac-ec2-windows" {
     #kms_key_id            = var.root_block_device_kms_key_id
   }
 
-#  depends_on = [module.aws_security_group.security_groups, aws_iam_role.iam]
  depends_on = [module.new_security_group.rds_security_groups, aws_iam_role.iam]
 
  tags = merge(tomap(var.ec2_tags),{ApplicationFunctionality = var.ApplicationFunctionality, 
@@ -159,23 +122,10 @@ lifecycle {
 }
 
 resource "aws_eip_association" "eip_assoc" {
-  # count = contains(["Public","public","PUBLIC"], var.Subnet_Name) ? 0 : 1
   count       = strcontains(var.Subnet_Name, "Public") ? 1: 0
-  # count = strcontains("hello world", "wor") ? 1 : 0
   instance_id   = aws_instance.project-iac-ec2-windows.id
   allocation_id = var.eip_allocation_id
 }
-
-# resource "aws_network_interface" "project-iac-ec2-windows-ni" {
-#   subnet_id       = var.subnet_id
-#   private_ips     = ["10.0.0.8"]
-  
-#   attachment {
-#     instance     = aws_instance.project-iac-ec2-windows.id
-#     device_index = 1
-#   }
-#   depends_on = [aws_instance.project-iac-ec2-windows]
-# }
 
 
   module "ebs_volume" {
