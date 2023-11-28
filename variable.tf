@@ -496,3 +496,12 @@ variable "existing_sg_rules" {
         cidr_blocks = list(string)
       })))
     }
+
+
+variable "efs_tags" {
+    default = {
+    }
+    description = "Tags for EFS Volume"
+    type        = map(string)
+  }
+

@@ -61,26 +61,10 @@ variable "ebs_volume_tags" {
   ]
 }
   
-variable "tags" {
+variable "efs_tags" {
     default = {
-      BackupSchedule             = "DR1y"
-      BusinessOwner              = "test@hotstar.com"
-      BusinessTower              = "test@hotstar.com"
-      InstanceIP                 = "10.33.21.25"
-      Name                       = "SSB-WPX-001-P"
-      OperatingSystem            = "Windows Server 2022"
-      OperatingSystemSupportTeam = "test@hotmail.com"
-      scheduler                  = "ec2-startstop"
-      ServerProcess              = "service MS "
-      ServerRoleType             = "Application"
-      ServiceCriticality         = "High"
-      Subnet-id                  = "subnet-04eff055558594bd7"
-      VPC-id                     = "vpc-0419802ed12eec58a"
-      TicketReference            = "CHG0050760"
-      DNSEntry                   = "csdasd"
-      DesignDocumentLink         = "acbv"
     }
-    description = "Tags for WIndows Ec2 instances"
+    description = "Tags for EFS Volume"
     type        = map(string)
   }
 

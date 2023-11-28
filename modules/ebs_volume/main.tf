@@ -8,7 +8,6 @@ resource "aws_ebs_volume" "project-iac-ebs" {
   snapshot_id       = var.snapshot_id
   type              = var.type
   kms_key_id        = var.kms_key_id
-
-  tags              = var.tags
+  tags              = var.efs_tags
 }
 

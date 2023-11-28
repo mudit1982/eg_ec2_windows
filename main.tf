@@ -131,6 +131,7 @@ resource "aws_eip_association" "eip_assoc" {
   module "ebs_volume" {
     source = "./modules/ebs_volume"
     ebs_volumes = local.volume_count
+    efs_tags = var.efs_tags
 
     # ... omitted
   }
