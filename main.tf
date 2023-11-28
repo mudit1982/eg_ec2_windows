@@ -56,6 +56,7 @@ module "new_security_group" {
   # security_rules = var.security_rules  
   security_rules = local.security_rules
   vpc_id = var.vpc_id
+  depends_on = [random.integer.ri]
 }
 
 
