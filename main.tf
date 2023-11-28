@@ -46,17 +46,17 @@ data "aws_subnet" "test" {
 
 # } 
 
-resource "random_integer" "ri" {
-  min = 10000
-  max = 99999
-}
+# resource "random_integer" "ri" {
+#   min = 10000
+#   max = 99999
+# }
 
 module "new_security_group" {
   source = "./modules/security_group_new"
   # security_rules = var.security_rules  
   security_rules = local.security_rules
   vpc_id = var.vpc_id
-  depends_on = [random_integer.ri]
+  # depends_on = [random_integer.ri]
 }
 
 
