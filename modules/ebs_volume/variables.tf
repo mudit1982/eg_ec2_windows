@@ -68,4 +68,9 @@ variable "efs_tags" {
     type        = map(string)
   }
 
+variable "snapshot_id" {
+  description = "(Optional) A snapshot to base the EBS volume off of"
+  type        = string
+  default     = ""
+}
 

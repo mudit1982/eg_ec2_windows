@@ -13,6 +13,9 @@ instance_profile_name="test_profile_new"
 private_ip="10.0.0.8"
 eip_allocation_id="eipalloc-0d6d0d62a857c4999"
 
+##Provide this only if EBS to be created from Snapshot Id. Else leave this Blank
+snapshot_id=""
+
 ##Tags for the EC2 Instance
 ec2_tags = {
       InstanceIP                 = "10.x.x.x"
