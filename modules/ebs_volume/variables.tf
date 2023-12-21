@@ -1,3 +1,49 @@
+variable "region" {
+  type        = string
+  description = "AWS Region the instance is launched in"
+  default     = ""
+}
+
+#AWS Availability zone where resources are created
+variable "azs" {
+  description = "(Required) The AZs where the EBS volume will exist"
+  type        = string
+  default     = ""
+}
+
+variable "INSTANCE_ID" {
+  description = "(Required) The Instance ID of the Instance to attach the created EBS"
+  type        = string
+  default     = ""
+}
+
+
+#Size of the EBS needed to be created
+variable "size" {
+  description = "(Optional) The size of the drive in GiBs"
+  type        = list(number)
+  default     = []
+}
+
+variable "create_from_snapshot" {
+  description = "Create EBS Volume from Snapshot"
+  type        = bool
+  default     = false
+}
+
+
+
+
+variable "ebs_device_name" {
+  type        = list(string)
+  description = "Name of the EBS device to mount"
+  #default     = ["/dev/xvdb", "/dev/xvdc", "/dev/xvdd", "/dev/xvde", "/dev/xvdf", "/dev/xvdg", "/dev/xvdh", "/dev/xvdi", "/dev/xvdj", "/dev/xvdk", "/dev/xvdl", "/dev/xvdm", "/dev/xvdn", "/dev/xvdo", "/dev/xvdp", "/dev/xvdq", "/dev/xvdr", "/dev/xvds", "/dev/xvdt", "/dev/xvdu", "/dev/xvdv", "/dev/xvdw", "/dev/xvdx", "/dev/xvdy", "/dev/xvdz"]
+default = [""]
+}
+
+
+
+
 variable "create" {
   description = "(Optional) Whether to create this resource or not"
   type        = string
@@ -7,13 +53,10 @@ variable "create" {
 variable "ebs_volumes" {
   description = "(Optional) Number of EBS volumes to create"
   type        = string
+  # default = "1"
 }
 
-variable "azs" {
-  description = "(Required) The AZs where the EBS volume will exist"
-  type        = string
-  default     = "us-east-2a"
-}
+
 
 variable "encrypted" {
   description = "(Optional) If true, the disk will be encrypted"
@@ -27,11 +70,6 @@ variable "iops" {
   default     = "100"
 }
 
-variable "size" {
-  description = "(Optional) The size of the drive in GiBs"
-  type        = string
-  default     = "20"
-}
 
 variable "snapshot_id" {
   description = "(Optional) A snapshot to base the EBS volume off of"
@@ -51,20 +89,14 @@ variable "kms_key_id" {
   default     = ""
 }
 
-variable "ebs_volume_tags" {
-  description = "(Optional) A mapping of tags to assign to the resource"
-  type        = list
-  default     = [
-    {
-      Name = "ebs-volume"
-    }
-  ]
-}
-  
+
 variable "efs_tags" {
-    default = {
-    }
-    description = "Tags for EFS Volume"
+    description = "Tags for WIndows Ec2 instances"
     type        = map(string)
   }
 
+variable "instance_id" {
+  description = "ID of the Instance created"
+  type        =  string
+  default     = ""
+}

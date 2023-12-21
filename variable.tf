@@ -511,3 +511,18 @@ variable "efs_tags" {
   default     = ""
 }
 
+
+
+#Size of the EBS needed to be created
+variable "size" {
+  description = "(Optional) The size of the drive in GiBs"
+  type        = list(number)
+  default     = []
+}
+
+#Size of the EBS needed to be created
+variable "instance_id" {
+  description = "ID of the Instance created"
+  type        =  string
+  default     = ""
+}

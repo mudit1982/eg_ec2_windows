@@ -5,16 +5,22 @@ ami_id  = "ami-00744e52917f35c39"
 availability_zone = "us-east-2a"
 instance_type = "t2.micro"
 key_name  = "Windows_kp"
-Subnet_Name="Private-subnet-2a"
+Subnet_Name="Public-subnet-2a"
 root_volume_type ="gp2" 
 root_volume_size ="40"
-ebs_volume_count ="2"
 instance_profile_name="test_profile_new"
 private_ip="10.0.0.8"
 eip_allocation_id="eipalloc-0d6d0d62a857c4999"
 
+ebs_volume_count ="4"
 ##Provide this only if EBS to be created from Snapshot Id. Else leave this Blank
 snapshot_id=""
+
+##This should match the Count of EBS_Volumes.Also each EBS would be created in the azs specified
+# with one to one mapping
+# Do not use "/dev/xvda" as this is default mount for root volume
+ebs_device_name=["/dev/xvdv","/dev/xvdc","/dev/xvdb","/dev/xvde"]
+size = [20,30,40,50]
 
 ##Tags for the EC2 Instance
 ec2_tags = {

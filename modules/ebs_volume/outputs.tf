@@ -8,3 +8,8 @@ output "ebs_volume_arn" {
   value       = "${concat(aws_ebs_volume.project-iac-ebs.*.id, tolist([""]))}"
 }
 
+output "id" {
+  value = [for s in aws_ebs_volume.project-iac-ebs : s.id]
+}
+
+
