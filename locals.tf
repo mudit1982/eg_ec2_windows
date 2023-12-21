@@ -13,7 +13,7 @@ locals {
   #Security Groups  SG_{EC2_Instance_Name}_{Unique Number or Name}
   security_rules = {
   join("-", ["SG", lookup(var.ec2_tags , "Name"), "InstanceSecurityGroup", "1"]) = {
-    "rule1" = { type = "ingress", from_port = 22, to_port = 22, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], description = "For SSH" },
+    "rule1" = { type = "ingress", from_port = 22, to_port = 3389, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], description = "For SSH" },
     "rule2" = { type = "ingress", from_port = 443, to_port = 443, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], description = "For SSH" },
     "rule3" = { type = "egress", from_port = 22, to_port = 22, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], description = "For SSH" }
   }
