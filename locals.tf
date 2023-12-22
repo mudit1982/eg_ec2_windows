@@ -22,13 +22,13 @@ locals {
   }
 }
 
-existing_sg_rules = {
-sg-0bd541cafc1955479 = {
+# existing_sg_rules = {
+# sg-0bd541cafc1955479 = {
 # "rule1" = { type = "ingress", from_port = 443, to_port = 443, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], description = "For SSH" }
-},
+# },
 #sg-0294c098f15df980e = {
 #"rule1" = { type = "ingress", from_port = 443, to_port = 443, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"], description = "For SSH" }
 #}
-} 
+# } 
 
-}
+# }
