@@ -1,15 +1,15 @@
 region="us-east-2"
 ACCTID=215691912540
-vpc_id  = "vpc-0777935da25d06fe3"
+vpc_id  = "vpc-0845479fd68896d42"
 ami_id  = "ami-00744e52917f35c39"
 availability_zone = "us-east-2a"
 instance_type = "t2.micro"
 key_name  = "Windows_kp"
-Subnet_Name="Public-subnet-2a"
+Subnet_Name="10.41.21.0-terraform-public-us-east-2b"
 root_volume_type ="gp2" 
 root_volume_size ="40"
 instance_profile_name="test_profile_new"
-private_ip="10.0.0.20"
+private_ip="10.41.11.10"
 eip_allocation_id="eipalloc-0d6d0d62a857c4999"
 
 ebs_volume_count ="3"
