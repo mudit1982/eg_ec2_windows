@@ -60,10 +60,10 @@ module "new_security_group" {
 }
 
 
-module "existing_sg_rules" {
-  source = "./modules/existing_sg_rules"
-  existing_sg_rules = local.existing_sg_rules
-}
+# module "existing_sg_rules" {
+#   source = "./modules/existing_sg_rules"
+#   existing_sg_rules = local.existing_sg_rules
+# }
 
 
 
