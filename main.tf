@@ -82,8 +82,8 @@ resource "aws_instance" "project-iac-ec2-windows" {
   subnet_id                            =  data.aws_subnet.test.id
   monitoring                           = var.monitoring
 
-  vpc_security_group_ids = concat(module.aws_security_group.security_groups[*].id,var.security_group_ids[*])
-  # vpc_security_group_ids = concat(module.new_security_group.id[*],var.security_group_ids[*])
+  # vpc_security_group_ids = concat(module.aws_security_group.security_groups[*].id,var.security_group_ids[*])
+  vpc_security_group_ids = concat(module.new_security_group.id[*],var.security_group_ids[*])
 
 
   root_block_device {
