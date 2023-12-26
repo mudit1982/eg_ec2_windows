@@ -78,45 +78,7 @@ variable "security_group_description" {
   description = "The Security Group description."
 }
 
-variable "ingress_security_group_rules" {
-  type = list(any)
-  default = [ 
-    {
-      type        = "ingress"
-      from_port   = 0
-      to_port     = 65535
-      protocol    = "-1"
-      cidr_blocks = ["0.0.0.0/0"]
-      description = "Allow all outbound traffic"
-    }
-  ]
-  description = "list of security group rules"
-}
-variable "egress_security_group_rules" {
-  type = list(any)
-  default = [ 
-{
-      type        = "egress"
-      from_port   = 0
-      to_port     = 65535
-      protocol    = "-1"
-      cidr_blocks = ["0.0.0.0/0"]
-      description = "Allow all outbound traffic"
-    },
-    {
-      type        = "egress"
-      from_port   = 10
-      to_port     = 65535
-      protocol    = "-1"
-      cidr_blocks = ["0.0.0.0/0"]
-      description = "Allow all outbound traffic"
-    }
-  ]
-}
-# variable "subnet_id" {
-#   type        = string
-#   description = "VPC Subnet ID the instance is launched in"
-# }
+
 
 variable "Subnet_Name" {
   type        = string
@@ -301,16 +263,7 @@ variable "recover_actions_alarm" {
   description = "A list of actions to take when alarms are triggered. Will likely be an SNS topic for event distribution."
 }
 
-# variable "reboot_actions_ok" {
-#   type        = list
-#   default     = ["arn:aws:sns:us-east-2:215691912540:Ec2RebootRecover"]
-#   description = "A list of actions to take when alarms are cleared. Will likely be an SNS topic for event distribution."
-# }
-# variable "recover_actions_ok" {
-#   type        = list
-#   default     = ["arn:aws:sns:us-east-2:215691912540:Ec2RebootRecover"]
-#   description = "A list of actions to take when alarms are cleared. Will likely be an SNS topic for event distribution."
-# }
+
 
 variable "Environment" {
   type    = string
@@ -471,31 +424,6 @@ variable "egress_rules" {
 
 
 
-
-
-
-# variable "security_rules" {
-
-#       type = map(map(object({
-#         type        = string
-#         description = string
-#         from_port   = number
-#         to_port     = number
-#         protocol    = string
-#         cidr_blocks = list(string)
-#       })))
-#     }
-# variable "existing_sg_rules" {
-
-#       type = map(map(object({
-#         type        = string
-#         description = string
-#         from_port   = number
-#         to_port     = number
-#         protocol    = string
-#         cidr_blocks = list(string)
-#       })))
-#     }
 
 
 variable "efs_tags" {
