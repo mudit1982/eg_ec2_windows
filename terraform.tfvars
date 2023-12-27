@@ -12,15 +12,15 @@ instance_profile_name="test_profile_new"
 private_ip="10.0.0.14"
 eip_allocation_id="eipalloc-06b3817323ac9cd98"
 
-ebs_volume_count ="2"
+ebs_volume_count ="3"
 ##Provide this only if EBS to be created from Snapshot Id. Else leave this Blank
 snapshot_id=""
 
 ##This should match the Count of EBS_Volumes.Also each EBS would be created in the azs specified
 # with one to one mapping
 # Do not use "/dev/xvda" as this is default mount for root volume
-ebs_device_name=["/dev/xvdv","/dev/xvdc"]
-size = [20,30]
+ebs_device_name=["/dev/xvdv","/dev/xvdc","/dev/xvde"]
+size = [20,30,40]
 
 ##Tags for the EC2 Instance
 ec2_tags = {
