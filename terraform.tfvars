@@ -12,7 +12,7 @@ instance_profile_name="test_profile_new"
 private_ip="10.0.0.14"
 eip_allocation_id="eipalloc-06b3817323ac9cd98"
 
-ebs_volume_count ="3"
+ebs_volume_count ="2"
 ##Provide this only if EBS to be created from Snapshot Id. Else leave this Blank
 snapshot_id=""
 
