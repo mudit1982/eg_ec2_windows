@@ -146,7 +146,7 @@ module "ebs_volume" {
     # ... omitted
   }
 
-
+  
 
 resource "aws_cloudwatch_metric_alarm" "reboot-alarm" {
   alarm_name                = "RebootAlarm"

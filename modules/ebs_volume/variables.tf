@@ -91,7 +91,7 @@ variable "kms_key_id" {
 
 
 variable "ebs_tags" {
-    description = "Tags for WIndows Ec2 instances"
+    description = "Tags for EBS Volume"
     type        = map(string)
   }
 

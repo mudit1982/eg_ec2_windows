@@ -421,15 +421,10 @@ variable "egress_rules" {
 
 
 
-
-
-
-
-
 variable "ebs_tags" {
     default = {
     } 
-    description = "Tags for EFS Volume"
+    description = "Tags for EBS Volume"
     type        = map(string)
   }
 
