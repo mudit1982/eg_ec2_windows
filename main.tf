@@ -59,11 +59,22 @@ module "new_security_group" {
   # depends_on = [random_integer.ri]
 }
 
+data "aws_instances" "foo" {
+  filter {
+    name   = "tag:Name"
+    values = ["${var.aws_ec2_name}"]
+  }
+}
 
-# module "existing_sg_rules" {
-#   source = "./modules/existing_sg_rules"
-#   existing_sg_rules = local.existing_sg_rules
-# }
+resource "null_resource" "test_duplicate_ec2" {
+  # Changes to any instance of the cluster requires re-provisioning
+  count   = length(data.aws_instances.foo.ids) > 0 ? 1 : 0
+  }
+
+module "existing_sg_rules" {
+  source = "./modules/existing_sg_rules"
+  existing_sg_rules = local.existing_sg_rules
+}
 
 
 
@@ -106,6 +117,7 @@ resource "aws_instance" "project-iac-ec2-windows" {
       BusinessOwner = var.BusinessOwner,
       ServiceCriticality = var.ServiceCriticality,
       Subnet-Name = var.Subnet_Name,
+      Name = var.aws_ec2_name,
       VPC-id = var.vpc_id})
 
 lifecycle {

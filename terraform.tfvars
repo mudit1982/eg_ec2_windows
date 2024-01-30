@@ -3,7 +3,7 @@ ACCTID=215691912540
 vpc_id  = "vpc-0777935da25d06fe3"
 ami_id  = "ami-00744e52917f35c39"
 availability_zone = "us-east-2a"
-instance_type = "t2.nano"
+instance_type = "t2.micro"
 key_name  = "Windows_kp"      
 Subnet_Name="private-subnet-2a"
 root_volume_type ="gp2" 
@@ -22,10 +22,10 @@ snapshot_id=""
 ebs_device_name=["/dev/xvdv","/dev/xvdc"]
 size = [20,30]
 
+aws_ec2_name = "Demo"
 ##Tags for the EC2 Instance
 ec2_tags = {
       InstanceIP                 = "10.x.x.x"
-      Name                       = "SSB-WPX-001-P"
       OperatingSystem            = "Windows Server 2022"
       OperatingSystemSupportTeam = "test@hotmail.com"
       scheduler                  = "ec2-startstop"

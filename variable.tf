@@ -454,3 +454,9 @@ variable "instance_id" {
   type        =  string
   default     = ""
 }
+
+
+variable "aws_ec2_name" {
+  type        = string
+  description = "Name of EC2 instance"
+}
