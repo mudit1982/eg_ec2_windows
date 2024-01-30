@@ -22,7 +22,7 @@ snapshot_id=""
 ebs_device_name=["/dev/xvdv","/dev/xvdc"]
 size = [20,30]
 
-aws_ec2_name = "Demo"
+aws_ec2_name = "DemoNew"
 ##Tags for the EC2 Instance
 ec2_tags = {
       InstanceIP                 = "10.x.x.x"
