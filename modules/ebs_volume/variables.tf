@@ -90,7 +90,7 @@ variable "kms_key_id" {
 }
 
 
-variable "efs_tags" {
+variable "ebs_tags" {
     description = "Tags for WIndows Ec2 instances"
     type        = map(string)
   }

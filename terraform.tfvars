@@ -49,7 +49,7 @@ ServiceCriticality="High"
 
 
 ##Tags for the EFS Volume
-efs_tags = {
+ebs_tags = {
       BackupSchedule             = "DR1y"
       BusinessOwner              = "test@hotstar.com"
       BusinessTower              = "test@hotstar.com"

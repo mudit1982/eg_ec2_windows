@@ -426,7 +426,7 @@ variable "egress_rules" {
 
 
 
-variable "efs_tags" {
+variable "ebs_tags" {
     default = {
     } 
     description = "Tags for EFS Volume"
