@@ -9,7 +9,7 @@ Subnet_Name="private-subnet-2a"
 root_volume_type ="gp2" 
 root_volume_size ="40"
 instance_profile_name="test_profile_new"
-private_ip="10.0.0.14"
+private_ip="10.0.0.9"
 eip_allocation_id="eipalloc-06b3817323ac9cd98"
 
 ebs_volume_count ="2"
