@@ -161,7 +161,7 @@ resource "aws_cloudwatch_metric_alarm" "reboot-alarm" {
   actions_enabled           = "true"
   # alarm_actions             = var.reboot_actions_alarm
   # ok_actions                = var.reboot_actions_ok
-  alarm_actions             = var.reboot_actions_alarm
+  alarm_actions             = local.reboot_actions_alarm
   ok_actions                = local.reboot_actions_ok
     dimensions = {
         InstanceId = aws_instance.project-iac-ec2-windows.id
@@ -178,7 +178,7 @@ resource "aws_cloudwatch_metric_alarm" "recover-alarm" {
   threshold                 =  var.recover_metric_threshold
   alarm_description         = "Trigger a recover action when instance status check fails for 15 consecutive minutes"
   actions_enabled           = "true"
-  alarm_actions             = var.recover_actions_alarm
+  alarm_actions             = local.recover_actions_alarm
   ok_actions                = local.recover_actions_ok
     dimensions = {
         InstanceId = aws_instance.project-iac-ec2-windows.id

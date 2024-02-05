@@ -252,16 +252,16 @@ variable "recover_period" {
   description = "The period in seconds over which the specified statistic is applied."
 }
 
-variable "reboot_actions_alarm" {
-  type        = list
-  default     = ["arn:aws:automate:us-east-2:ec2:reboot"]
-  description = "A list of actions to take when alarms are triggered. Will likely be an SNS topic for event distribution."
-}
-variable "recover_actions_alarm" {
-  type        = list
-  default     = ["arn:aws:automate:us-east-2:ec2:recover"]
-  description = "A list of actions to take when alarms are triggered. Will likely be an SNS topic for event distribution."
-}
+# variable "reboot_actions_alarm" {
+#   type        = list
+#   default     = ["arn:aws:automate:us-east-2:ec2:reboot"]
+#   description = "A list of actions to take when alarms are triggered. Will likely be an SNS topic for event distribution."
+# }
+# variable "recover_actions_alarm" {
+#   type        = list
+#   default     = ["arn:aws:automate:us-east-2:ec2:recover"]
+#   description = "A list of actions to take when alarms are triggered. Will likely be an SNS topic for event distribution."
+# }
 
 
 
